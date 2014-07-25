@@ -1,16 +1,6 @@
-class Discovermap
-  WALL=0
-  EMPTY=1
-  PILL=2
-  POWER_PILL=3
-  FRUIT=4
-  LAMBDA_MAN_STARTING_POSITION=5
-  GHOST_STARTING_POSITION=6
+require_relative "../lib/constants.rb"
 
-  UP=0
-  RIGHT=1
-  DOWN=2
-  LEFT=3
+class Discovermap
   @map=[]
   def initialize(val)
     @map=val 
@@ -19,43 +9,23 @@ class Discovermap
     puts "hello"
   end
   def get_cell_contents(x,y) 
-    if (@map[x][y] == 0) 
-      return "WALL"
-    else
-    if (@map[x][y] == 1) 
-      return "EMPTY"
-    else
-    if (@map[x][y] == 2) 
-      return "PILL"
-    else
-    if (@map[x][y] == 3) 
-      return "POWER_PILL"
-    else
-    if (@map[x][y] == 4) 
-      return "FRUIT"
-    else
-    if (@map[x][y] == 5) 
-      return "EMPTY"
-    else
-    if (@map[x][y] == 6) 
-      return "EMPTY"
-    else
-      return @map[x][y]
-    end
+    return @map[x][y]
   end
   def get_available_moves(x,y)
-    directions= [UP,RIGHT,DOWN,LEFT]
-    if (get_cell_contents(x+1,y) == WALL) 
-      directions.delete(RIGHT);
-   end
-   if (get_cell_contents(x,y+1) == WALL) 
-     directions.delete(DOWN);
+    directions= [DIRECTIONS[:up],DIRECTIONS[:right],
+                 DIRECTIONS[:down],DIRECTIONS[:left]
+                ]
+    if (get_cell_contents(x+1,y) == MAP[:wall]) 
+      directions.delete(DIRECTIONS[:right]);
     end
-    if (get_cell_contents(x-1,y) == WALL) 
-      directions.delete(LEFT);
+    if (get_cell_contents(x,y+1) == MAP[:wall]) 
+      directions.delete(DIRECTIONS[:left]);
+     end
+    if (get_cell_contents(x-1,y) == MAP[:wall]) 
+      directions.delete(DIRECTIONS[:down]);
     end
-    if (get_cell_contents(x,y-1) == WALL) 
-      directions.delete(UP);
+    if (get_cell_contents(x,y-1) == MAP[:wall]) 
+      directions.delete(DIRECTIONS[:up]);
     end
     return directions
   end
