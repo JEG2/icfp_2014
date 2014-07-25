@@ -1,8 +1,12 @@
 require_relative "func_definition"
+
 require_relative "cons_statement"
+require_relative "debug_statement"
+
 require_relative "constant"
-require_relative "func_reference"
 require_relative "literal"
+require_relative "func_reference"
+require_relative "variable_reference"
 
 module LambdaLang
   class Parser
@@ -84,6 +88,8 @@ module LambdaLang
           case token
           when "{"
             parse_cons_statement
+          when "debug"
+            parse_debug_statement
           else
             fail "unknown statement type"
           end
@@ -100,6 +106,12 @@ module LambdaLang
       ConsStatement.new(car, cdr)
     end
 
+    def parse_debug_statement
+      value = parse_term
+
+      DebugStatement.new(value)
+    end
+
     def parse_term
       token = lexer.next
       case token
@@ -109,6 +121,8 @@ module LambdaLang
         Constant.new(token)
       when "&"
         FuncReference.new(parse_name)
+      when /\A\w+\z/
+        VariableReference.new(token)
       else
         fail "unknown term"
       end
