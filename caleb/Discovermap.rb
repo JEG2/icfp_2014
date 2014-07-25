@@ -19,7 +19,29 @@ class Discovermap
     puts "hello"
   end
   def get_cell_contents(x,y) 
-    return @map[x][y]
+    if (@map[x][y] == 0) 
+      return "WALL"
+    else
+    if (@map[x][y] == 1) 
+      return "EMPTY"
+    else
+    if (@map[x][y] == 2) 
+      return "PILL"
+    else
+    if (@map[x][y] == 3) 
+      return "POWER_PILL"
+    else
+    if (@map[x][y] == 4) 
+      return "FRUIT"
+    else
+    if (@map[x][y] == 5) 
+      return "EMPTY"
+    else
+    if (@map[x][y] == 6) 
+      return "EMPTY"
+    else
+      return @map[x][y]
+    end
   end
   def get_available_moves(x,y)
     directions= [UP,RIGHT,DOWN,LEFT]

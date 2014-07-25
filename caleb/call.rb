@@ -29,5 +29,5 @@ array= [
 
 mymap = Discovermap.new(array)
 puts mymap
-p mymap.get_cell_contents(10,10) 
+p mymap.get_cell_contents(0,0) 
 p mymap.get_available_moves(10,10) 
