@@ -14,6 +14,7 @@ class Discovermap
   def hello
     puts "hello"
   end
+  attr_reader :fruit_status
   def get_cell_contents(x,y) 
     return @map[x][y]
   end

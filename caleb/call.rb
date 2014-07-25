@@ -46,3 +46,4 @@ p mymap.get_available_moves(1,1)
 puts "lambdaman position"
 p mymap.get_lambdaman_position()
 p mymap.get_ghost_locations()
+p mymap.fruit_status
