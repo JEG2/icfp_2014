@@ -1,6 +1,7 @@
 require_relative "board_map"
 require_relative "create_heat_map"
 require_relative "../caleb/Discovermap"
+require_relative "../lib/constants"
 
 module HeatMap
   class HeatMap
@@ -16,11 +17,15 @@ module HeatMap
     end
     
     def create_heat_map
-      @heat_map = CreateHeatMap.new.create_heat_map
+      @heat_map = CreateHeatMap.new.create_heat_map(given_map)
     end
     
     def DM
       dmap = Discovermap.new(get_map)
+    end
+    
+    def direction (dir_num)
+      DIRECTIONS.invert[dir_num]
     end
   end
 end

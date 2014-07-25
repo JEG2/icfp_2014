@@ -12,3 +12,10 @@ MAP = { wall:0,
         lambda_man_starting_position:5,
         ghost_starting_position:6
       }
+      
+SCORE = { pill:10,
+          power_pill:50,
+          fruit:255,
+          ghost_starting_position:0,
+          ghost_current_position:-32
+        }
