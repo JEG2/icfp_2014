@@ -34,7 +34,7 @@ testGhosts = [
               [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]]
              ]
 
-mymap = Discovermap.new(testmap,testLambdaMan,testGhosts)
+mymap = Discovermap.new(testmap,testLambdaMan,testGhosts,3)
 puts mymap
 p MAP.invert[mymap.get_cell_contents(16,11)]
 p MAP.invert[mymap.get_cell_contents(8,11)]

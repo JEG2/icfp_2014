@@ -4,10 +4,12 @@ class Discovermap
   @map=[]
   @lambda_man_info
   @ghost_info=[]
-  def initialize(val,val2,val3)
+  @fruit_status=0
+  def initialize(val,val2,val3,val4=0)
     @map=val 
     @lambda_man_info=val2
     @ghost_info=val3
+    @fruit_status=val4
   end
   def hello
     puts "hello"
