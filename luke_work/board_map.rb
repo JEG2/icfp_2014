@@ -2,7 +2,8 @@ module HeatMap
   class BoardMap
     
     def initialize
-      @map_file = "board.dat"
+      @map_file = "map.dat"
+      # @map_file = "board.dat"
       @map_data = []
     end
     
