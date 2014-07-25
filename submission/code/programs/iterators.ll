@@ -24,20 +24,3 @@ func find_between(from, to, default, test, args) {
     }
   }
 }
-
-func map(list, transformer) {
-  if (#list) {
-    list
-  } else {
-    {&transformer('list), map("list, transformer)}
-  }
-}
-
-func map_with_index(list, transformer, index, args) {
-  if (#list) {
-    list
-  } else {
-    {&transformer('list, index, args),
-     map_with_index("list, transformer, index + 1, args)}
-  }
-}
