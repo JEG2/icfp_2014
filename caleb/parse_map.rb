@@ -10,12 +10,11 @@ file.each_line do |line|
   myline = myline.gsub(/%/,'4, ')
   myline = myline.gsub(/\\/,'5, ')
   myline = myline.gsub(/=/,'6, ')
-  myline = myline.gsub(/=/,'6, ')
   myline = myline.chop
   myline = myline.chop
   print "[ "
   print myline
-  puts " ]"
+  puts " ],"
 end
 puts "]"
 file.close
