@@ -11,4 +11,4 @@ trace.each do |line|
   words= line.split(/\s+/)
   code[words[2].to_i]= "-->" +  code[words[2].to_i].chomp() + "	" +  line
 end
-#puts code
+puts code
