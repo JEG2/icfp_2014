@@ -31,25 +31,21 @@ class Discovermap
     cur_x=x+1
     cur_y=y
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x
     cur_y=y+1
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x-1
     cur_y=y
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-     puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x
     cur_y=y-1
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     return directions
