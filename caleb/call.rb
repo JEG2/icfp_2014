@@ -27,6 +27,12 @@ testmap= [
 ]
 
 testLambdaMan = [[0],[16,11],[0],[3][5]]
+testGhosts = [ 
+              [GHOST_VITALITY[:standard],[8,11],DIRECTIONS[:up]],
+              [GHOST_VITALITY[:standard],[10,12],DIRECTIONS[:up]],
+              [GHOST_VITALITY[:standard],[10,11],DIRECTIONS[:up]],
+              [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]]
+             ]
 
 mymap = Discovermap.new(testmap,testLambdaMan)
 puts mymap

@@ -17,20 +17,30 @@ class Discovermap
     return @lambda_man_info[1]
   end
   def get_available_moves(x,y)
-    directions= [DIRECTIONS[:up],DIRECTIONS[:right],
-                 DIRECTIONS[:down],DIRECTIONS[:left]
-                ]
-    if (get_cell_contents(x+1,y) == MAP[:wall]) 
-      directions.delete(DIRECTIONS[:right]);
+    directions= [ ]
+    cur_x=x+1
+    cur_y=y
+    if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
+      puts get_cell_contents(cur_x,cur_y)
+      directions << [cur_x,cur_y]
     end
-    if (get_cell_contents(x,y+1) == MAP[:wall]) 
-      directions.delete(DIRECTIONS[:left]);
-     end
-    if (get_cell_contents(x-1,y) == MAP[:wall]) 
-      directions.delete(DIRECTIONS[:down]);
+    cur_x=x
+    cur_y=y+1
+    if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
+      puts get_cell_contents(cur_x,cur_y)
+      directions << [cur_x,cur_y]
     end
-    if (get_cell_contents(x,y-1) == MAP[:wall]) 
-      directions.delete(DIRECTIONS[:up]);
+    cur_x=x-1
+    cur_y=y
+    if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
+      puts get_cell_contents(cur_x,cur_y)
+      directions << [cur_x,cur_y]
+    end
+    cur_x=x
+    cur_y=y-1
+    if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
+      puts get_cell_contents(cur_x,cur_y)
+      directions << [cur_x,cur_y]
     end
     return directions
   end
