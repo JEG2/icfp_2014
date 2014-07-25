@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 require_relative "./Discovermap"
 
-array= [ 
+testmap= [ 
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
 [ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 ],
 [ 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0 ],
@@ -26,8 +26,12 @@ array= [
 [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
 ]
 
+testLambdaMan = [[0],[16,11],[0],[3][5]]
 
-mymap = Discovermap.new(array)
+mymap = Discovermap.new(testmap,testLambdaMan)
 puts mymap
+p MAP.invert[mymap.get_cell_contents(16,11)]
 p mymap.get_cell_contents(1,1) 
 p mymap.get_available_moves(1,1) 
+puts "lambdaman position"
+p mymap.get_lambdaman_position()
