@@ -21,6 +21,7 @@ module HeatMap
       @dirs     = Discovermap.new(@map,@lambda_man_shit,@ghost_shit)
       @heat_map = set_up_heat_map
       @heat_map = apply_map_state
+      apply_ghost_positions
       disperse_heat_of_board_elements
       print
       # Ghosts chilling effect on the map
@@ -52,9 +53,23 @@ module HeatMap
           end
         end
       end
+    end
+    
+    def apply_ghost_positions
+      # puts "Before: #{@heat_map}"
       
+      @dirs.get_ghost_locations.each do |location|
+        #puts "Ghost location: #{location}"
+        if @heat_map[location[0]][location[1]] - 32 < 1
+          @heat_map[location[0]][location[1]] = 1
+        else
+          @heat_map[location[0]][location[1]] =
+               @heat_map[location[0]][location[1]] - 32
+        end
+      end
       
-      
+      # puts "After: #{@heat_map}"
+      # @heat_map
     end
     
     def disperse_heat_of_board_elements   
@@ -77,8 +92,11 @@ module HeatMap
     end
       
     def set_cell_heat(cell_address, amb, stepping_array)
+      if amb == -1
+        amb = 0
+      end
       amb = amb/2
-      if amb > 0
+      if amb != 0
         @dirs.get_available_moves(cell_address[0],
                                   cell_address[1]).each do |dir|
           if !stepping_array.include?(dir)
@@ -93,10 +111,15 @@ module HeatMap
       master_adder_array.each do |cells_heat_effect|
         cells_heat_effect.each do |cell_heat_modifier|
           cell_to_modify = cell_heat_modifier[0]
-          @heat_map[cell_to_modify[0]][cell_to_modify[1]]+=cell_heat_modifier[1]
-          # puts "what_am_I: #{what_am_I}"  
-        end
-        
+          x = @heat_map[cell_to_modify[0]][cell_to_modify[1]]+cell_heat_modifier[1]
+          if x <= 1
+            x = 1
+          end
+          if x > 255
+            x = 255
+          end
+          @heat_map[cell_to_modify[0]][cell_to_modify[1]] = x
+        end        
       end
     end
     
