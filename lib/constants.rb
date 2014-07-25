@@ -19,3 +19,7 @@ SCORE = { pill:10,
           ghost_starting_position:0,
           ghost_current_position:-32
         }
+GHOST_VITALITY = { standard:0,
+                   fright:1,
+                   invisible:2
+        }
