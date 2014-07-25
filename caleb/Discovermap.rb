@@ -20,10 +20,8 @@ class Discovermap
   end
   def get_ghost_locations
     locations = []
-    puts "ghost count: #{@ghost_info.size}"
 
     @ghost_info.each { |ghost| 
-      puts "ghost"
       locations << ghost[1] 
     }
     return locations
