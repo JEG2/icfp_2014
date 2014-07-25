@@ -20,7 +20,6 @@ class Discovermap
   end
   def get_ghost_locations
     locations = []
-
     @ghost_info.each { |ghost| 
       locations << ghost[1] 
     }
