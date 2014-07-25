@@ -3,5 +3,5 @@ func main(initial_world, undocumented) {
 }
 
 func step(ai_state, current_world) {
-  {0, 3}
+  {0, LEFT}
 }

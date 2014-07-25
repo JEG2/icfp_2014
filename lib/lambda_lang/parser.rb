@@ -2,6 +2,7 @@ require_relative "func_definition"
 require_relative "cons_statement"
 require_relative "constant"
 require_relative "func_reference"
+require_relative "literal"
 
 module LambdaLang
   class Parser
@@ -103,6 +104,8 @@ module LambdaLang
       token = lexer.next
       case token
       when /\A\d+\z/
+        Literal.new(token)
+      when /\A[A-Z]+\z/
         Constant.new(token)
       when "&"
         FuncReference.new(parse_name)

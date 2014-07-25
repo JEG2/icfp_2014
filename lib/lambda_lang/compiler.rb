@@ -1,6 +1,7 @@
 require_relative "cons_statement"
 require_relative "constant"
 require_relative "func_reference"
+require_relative "literal"
 
 module LambdaLang
   class Compiler
@@ -53,8 +54,10 @@ module LambdaLang
 
     def compile_term(term)
       case term
-      when Constant
+      when Literal
         write "LDC #{term.value}"
+      when Constant
+        write "LDC #{term.value}", term.name
       when FuncReference
         write "LDF &#{term.name}"
       end
