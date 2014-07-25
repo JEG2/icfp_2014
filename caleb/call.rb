@@ -34,7 +34,7 @@ testGhosts = [
               [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]]
              ]
 
-mymap = Discovermap.new(testmap,testLambdaMan)
+mymap = Discovermap.new(testmap,testLambdaMan,testGhosts)
 puts mymap
 p MAP.invert[mymap.get_cell_contents(16,11)]
 p MAP.invert[mymap.get_cell_contents(8,11)]
@@ -45,3 +45,4 @@ p mymap.get_cell_contents(1,1)
 p mymap.get_available_moves(1,1) 
 puts "lambdaman position"
 p mymap.get_lambdaman_position()
+p mymap.get_ghost_locations()

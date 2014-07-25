@@ -3,9 +3,11 @@ require_relative "../lib/constants.rb"
 class Discovermap
   @map=[]
   @lambda_man_info
-  def initialize(val,val2)
+  @ghost_info=[]
+  def initialize(val,val2,val3)
     @map=val 
     @lambda_man_info=val2
+    @ghost_info=val3
   end
   def hello
     puts "hello"
@@ -17,7 +19,14 @@ class Discovermap
     return @lambda_man_info[1]
   end
   def get_ghost_locations
-    return []
+    locations = []
+    puts "ghost count: #{@ghost_info.size}"
+
+    @ghost_info.each { |ghost| 
+      puts "ghost"
+      locations << ghost[1] 
+    }
+    return locations
   end
   def get_available_moves(x,y)
     directions= [ ]
@@ -36,7 +45,7 @@ class Discovermap
     cur_x=x-1
     cur_y=y
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
+     puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x
