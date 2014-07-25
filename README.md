@@ -1,4 +1,7 @@
-icfp_2014
-=========
+# ICFP 2014
 
-Our contest entry.
+Luke DeWitt
+James Edward Gray II
+Ed Livengood
+Caleb Norloh
+
