@@ -16,6 +16,9 @@ class Discovermap
   def get_lambdaman_position
     return @lambda_man_info[1]
   end
+  def get_ghost_locations
+    return []
+  end
   def get_available_moves(x,y)
     directions= [ ]
     cur_x=x+1
