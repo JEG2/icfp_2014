@@ -3,11 +3,18 @@ module HeatMap
     
     def initialize
       puts "Hello"
-      @heat_map = []
-      @map      = []
+      @heat_map        = []
+      @map             = []
+      @ghost_shit      = [ 
+                      [GHOST_VITALITY[:standard],[8,11],DIRECTIONS[:up]],
+                      [GHOST_VITALITY[:standard],[10,12],DIRECTIONS[:up]],
+                      [GHOST_VITALITY[:standard],[10,11],DIRECTIONS[:up]],
+                      [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]] 
+                         ]
+      @lambda_man_shit = [[0],[16,11],[0],[3][5]]
     end
     
-    attr_reader :heat_map, :map
+    attr_reader :heat_map, :map, :ghost_shit
     
     def create_heat_map(current_map)
       @map = current_map
@@ -81,7 +88,7 @@ module HeatMap
       amb = amb/2
       if amb > 0
         
-        dirs = Discovermap.new(@map, [[0],[16,11],[0],[3][5]])
+        dirs = Discovermap.new(@map,@lambda_man_shit,@ghost_shit)
         dirs.get_available_moves(cell_address[0],
                                  cell_address[1]).each do |dir|
           if !stepping_array.include?(dir)
@@ -94,6 +101,9 @@ module HeatMap
     
     def apply_elements_heat_to_map(master_adder_array)
       puts "master_adder_array: #{master_adder_array}"
+      
+      
+      
     end
   end
 end
