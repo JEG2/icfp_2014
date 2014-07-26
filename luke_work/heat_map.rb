@@ -20,12 +20,12 @@ module HeatMap
       @heat_map = CreateHeatMap.new.create_heat_map(given_map)
     end
     
-    def DM
-      dmap = Discovermap.new(get_map)
-    end
+    #    def DM
+    #     dmap = Discovermap.new(get_map)
+    #    end
     
-    def direction (dir_num)
-      DIRECTIONS.invert[dir_num]
-    end
+    #    def direction (dir_num)
+    #      DIRECTIONS.invert[dir_num]
+    #    end
   end
 end
