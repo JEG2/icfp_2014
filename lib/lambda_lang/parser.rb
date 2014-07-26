@@ -1,5 +1,6 @@
 require_relative "func_definition"
 
+require_relative "if_statement"
 require_relative "debug_statement"
 require_relative "single_expression_statement"
 
@@ -9,6 +10,12 @@ require_relative "subtraction_expression"
 require_relative "multiplication_expression"
 require_relative "division_expression"
 require_relative "single_term_expression"
+require_relative "equals_expression"
+require_relative "greater_than_or_equal_expression"
+require_relative "greater_than_expression"
+require_relative "less_than_or_equal_expression"
+require_relative "less_than_expression"
+require_relative "atom_expression"
 
 require_relative "constant"
 require_relative "literal"
@@ -97,6 +104,8 @@ module LambdaLang
 
         statement =
           case token
+          when "if"
+            parse_if_statement(functions)
           when "debug"
             parse_debug_statement
           else
@@ -104,8 +113,8 @@ module LambdaLang
             SingleExpressionStatement.new(parse_expression)
           end
         if promote_statement
-          name       = "__f_#{functions.size}__"
-          functions << FuncDefinition.new(name, ["_"], [statement])
+          name        = "__f_#{functions.size}__"
+          functions  << FuncDefinition.new(name, ["_"], [statement])
           statements <<
             SingleExpressionStatement.new(
               SingleTermExpression.new(
@@ -119,6 +128,26 @@ module LambdaLang
       statements
     end
 
+    def parse_if_statement(functions)
+      fail "expected conditional" unless lexer.next == "("
+      conditional = parse_expression
+      fail "expected end of conditional" unless lexer.next == ")"
+
+      fail "expected true statements" unless lexer.next == "{"
+      true_statements = parse_statements(functions)
+
+      false_statements =
+        if lexer.peek == "else"
+          lexer.next
+          fail "expected false statements" unless lexer.next == "{"
+          parse_statements(functions)
+        else
+          [ ]
+        end
+
+      IfStatement.new(conditional, true_statements, false_statements)
+    end
+
     def parse_debug_statement
       value = parse_expression
 
@@ -129,15 +158,23 @@ module LambdaLang
       if lexer.peek == "{"
         lexer.next
         parse_cons_expression
+      elsif lexer.peek == "#"
+        lexer.next
+        AtomExpression.new(parse_term)
       else
         left = parse_term
-        if lexer.peek =~ /\A[-+*\/]\z/
+        if %w[- + * / == >= > <= <].include?(lexer.peek)
           op    =
             case lexer.next
-            when "-" then SubtractionExpression
-            when "+" then AdditionExpression
-            when "*" then MultiplicationExpression
-            when "/" then DivisionExpression
+            when "-"  then SubtractionExpression
+            when "+"  then AdditionExpression
+            when "*"  then MultiplicationExpression
+            when "/"  then DivisionExpression
+            when "==" then EqualsExpression
+            when ">=" then GreaterThanOrEqualExpression
+            when ">"  then GreaterThanExpression
+            when "<=" then LessThanOrEqualExpression
+            when "<"  then LessThanExpression
             end
           right = parse_term
           op.new(left, right)

@@ -2,7 +2,7 @@ require "strscan"
 
 module LambdaLang
   class Lexer
-    TOKEN_REGEX = /(?:\w+|[-+*\/(){},&])/
+    TOKEN_REGEX = /(?:==|>=|<=|\w+|[-+*\/(){},&<>#])/
 
     def initialize(code)
       @code = StringScanner.new(code)
