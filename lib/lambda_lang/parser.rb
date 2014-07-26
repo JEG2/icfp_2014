@@ -25,6 +25,7 @@ require_relative "car"
 require_relative "cdr"
 require_relative "func_reference"
 require_relative "func_call"
+require_relative "anonymous_func_call"
 
 module LambdaLang
   class Parser
@@ -233,7 +234,12 @@ module LambdaLang
       when /\A[A-Z]+\z/
         Constant.new(token)
       when "&"
-        FuncReference.new(parse_name)
+        name = parse_name
+        if lexer.peek == "("
+          AnonymousFuncCall.new(name, parse_arguments)
+        else
+          FuncReference.new(name)
+        end
       when /\A\w+\z/
         if lexer.peek == "("
           FuncCall.new(token, parse_arguments)

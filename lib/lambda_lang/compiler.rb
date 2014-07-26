@@ -21,7 +21,7 @@ require_relative "literal"
 require_relative "func_reference"
 require_relative "variable_reference"
 require_relative "func_call"
-
+require_relative "anonymous_func_call"
 
 module LambdaLang
   class Compiler
@@ -180,6 +180,13 @@ module LambdaLang
         end
         write "LDF &#{term.name}"
         write "AP #{term.arguments.size}", "call/#{term.name}"
+      when AnonymousFuncCall
+        term.arguments.each do |argument|
+          next if argument == :stack
+          compile_expression(argument, function)
+        end
+        compile_term(VariableReference.new(term.name), function)
+        write "AP #{term.arguments.size}", "call/&#{term.name}"
       end
     end
 
