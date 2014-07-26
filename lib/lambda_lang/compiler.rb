@@ -1,21 +1,30 @@
-require_relative "cons_statement"
 require_relative "debug_statement"
+require_relative "single_expression_statement"
+
+require_relative "cons_expression"
+require_relative "addition_expression"
+require_relative "subtraction_expression"
+require_relative "multiplication_expression"
+require_relative "division_expression"
+require_relative "single_term_expression"
 
 require_relative "constant"
 require_relative "literal"
 require_relative "func_reference"
 require_relative "variable_reference"
+require_relative "func_call"
+
 
 module LambdaLang
   class Compiler
     def initialize(functions)
-      @functions = functions
-      @lines     = [ ]
-      @next_note = nil
+      @functions  = functions
+      @lines      = [ ]
+      @next_notes = [ ]
     end
 
-    attr_reader :functions, :lines, :next_note
-    private     :functions, :lines, :next_note
+    attr_reader :functions, :lines, :next_notes
+    private     :functions, :lines, :next_notes
 
     def compile
       main, rest = functions.partition { |function| function.name == "main" }
@@ -37,7 +46,7 @@ module LambdaLang
     end
 
     def compile_function(function)
-      @next_note = "func/#{function.name}"
+      @next_notes << "func/#{function.name}"
       function.statements.each do |statement|
         compile_statement(statement, function)
       end
@@ -46,15 +55,40 @@ module LambdaLang
 
     def compile_statement(statement, function)
       case statement
-      when ConsStatement
-        compile_term(statement.car, function)
-        compile_term(statement.cdr, function)
-        write "CONS"
       when DebugStatement
-        compile_term(statement.value, function)
+        compile_expression(statement.value, function)
         write "DBUG"
-      else
+      when SingleExpressionStatement
+        compile_expression(statement.expression, function)
+       else
         fail "unknown statement type"
+      end
+    end
+
+    def compile_expression(expression, function)
+      case expression
+      when ConsExpression
+        compile_expression(expression.car, function)
+        compile_expression(expression.cdr, function)
+        write "CONS"
+      when AdditionExpression
+        compile_term(expression.left, function)
+        compile_term(expression.right, function)
+        write "ADD"
+      when SubtractionExpression
+        compile_term(expression.left, function)
+        compile_term(expression.right, function)
+        write "SUB"
+      when MultiplicationExpression
+        compile_term(expression.left, function)
+        compile_term(expression.right, function)
+        write "MUL"
+      when DivisionExpression
+        compile_term(expression.left, function)
+        compile_term(expression.right, function)
+        write "DIV"
+      when SingleTermExpression
+        compile_term(expression.term, function)
       end
     end
 
@@ -70,19 +104,26 @@ module LambdaLang
         i = function.parameters.index(term.name)
         fail "unknown variable" unless i
         write "LD 0 #{i}", "var/#{term.name}"
+      when FuncCall
+        term.arguments.each do |argument|
+          next if argument == :stack
+          compile_term(argument, function)
+        end
+        write "LDF &#{term.name}"
+        write "AP #{term.arguments.size}", "call/#{term.name}"
       end
     end
 
-    def write(code, note = next_note)
-      lines     << [code, note]
-      @next_note = nil
+    def write(code, notes = [ ])
+      lines << [code, next_notes + Array(notes)]
+      @next_notes.clear
     end
 
     def build_pretty_lines
       max_code_width = lines.map { |code, _| code.size }.max
-      lines.map.with_index { |(code, note), i|
+      lines.map.with_index { |(code, notes), i|
         line  = "%-#{max_code_width + 2}s; %i" % [code, i]
-        line << ": #{note}" if note
+        line << ": #{notes.join(': ')}" unless notes.empty?
         line + "\n"
       }
     end
@@ -90,7 +131,7 @@ module LambdaLang
     def resolve_references
       lines.each do |line|
         line.first.gsub!(/\ALDF\s+&(\w+)\z/) {
-          "LDF #{lines.find_index { |_, note| note == 'func/' + $1 }}"
+          "LDF #{lines.find_index { |_, notes| notes.include?('func/' + $1) }}"
         }
       end
     end

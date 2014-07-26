@@ -27,6 +27,14 @@ module LambdaLang
       code.check(TOKEN_REGEX)
     end
 
+    def unshift(token)
+      code.string = "#{token} #{code.rest}"
+    end
+
+    def rest
+      code.rest
+    end
+
     private
 
     def consume_whitespace

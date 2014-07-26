@@ -1,5 +1,5 @@
 module LambdaLang
-  class ConsStatement
+  class ConsExpression
     def initialize(car, cdr)
       @car = car
       @cdr = cdr
