@@ -2,7 +2,6 @@ module HeatMap
   class CreateHeatMap
     
     def initialize
-      puts "Hello"
       @heat_map        = []
       @map             = []
       @ghost_shit      = [ 
@@ -14,14 +13,16 @@ module HeatMap
       @lambda_man_shit = [[0],[16,11],[0],[3][5]]
     end
     
-    attr_reader :heat_map, :map, :ghost_shit
+    attr_reader :heat_map, :map, :ghost_shit, :dirs
     
     def create_heat_map(current_map)
-      @map = current_map
+      @map      = current_map
       @heat_map = current_map.dup
+      @dirs     = Discovermap.new(@map,@lambda_man_shit,@ghost_shit)
       @heat_map = set_up_heat_map
       @heat_map = apply_map_state
       disperse_heat_of_board_elements
+      print
       # Ghosts chilling effect on the map
     end
     
@@ -45,22 +46,18 @@ module HeatMap
             mapcell = @map[x][y]
             mapsymbol = MAP.invert[mapcell]
             cell + SCORE[mapsymbol]
-            # puts "x index #{x}"
-            # puts "y index #{y}"
-            # puts "Cell value #{cell}"
-            # puts "Score valud #{SCORE[mapsymbol]}"
-            # puts "Final Score: #{cell + SCORE[mapsymbol]}"
             cell + SCORE[mapsymbol]
           else
             0
           end
         end
       end
+      
+      
+      
     end
     
-    def disperse_heat_of_board_elements
-      # each or map with index over a map to get scores
-      
+    def disperse_heat_of_board_elements   
       master_adder_array = []
       
       # devide the heat minus 64 (ambiant)
@@ -70,13 +67,8 @@ module HeatMap
           if cell != 0 && cell != 64
             stepping_array = [ ]
             stepping_array << [[x,y], 0]
-            puts "My stepping_array: #{stepping_array}"
-            # puts "I am x: #{x}"
-            #puts "I am y: #{y}"
             amb = cell - 64
-
             set_cell_heat([x,y], amb, stepping_array)
-            
             master_adder_array << stepping_array
           end
         end
@@ -87,10 +79,8 @@ module HeatMap
     def set_cell_heat(cell_address, amb, stepping_array)
       amb = amb/2
       if amb > 0
-        
-        dirs = Discovermap.new(@map,@lambda_man_shit,@ghost_shit)
-        dirs.get_available_moves(cell_address[0],
-                                 cell_address[1]).each do |dir|
+        @dirs.get_available_moves(cell_address[0],
+                                  cell_address[1]).each do |dir|
           if !stepping_array.include?(dir)
             stepping_array << [dir, amb]
             set_cell_heat(dir, amb, stepping_array)
@@ -100,10 +90,24 @@ module HeatMap
     end
     
     def apply_elements_heat_to_map(master_adder_array)
-      puts "master_adder_array: #{master_adder_array}"
-      
-      
-      
+      master_adder_array.each do |cells_heat_effect|
+        cells_heat_effect.each do |cell_heat_modifier|
+          cell_to_modify = cell_heat_modifier[0]
+          @heat_map[cell_to_modify[0]][cell_to_modify[1]]+=cell_heat_modifier[1]
+          # puts "what_am_I: #{what_am_I}"  
+        end
+        
+      end
+    end
+    
+    def print
+      @heat_map.each do |line|
+        line.each do |element|
+          printf(" %3d,", element)
+        end
+        puts
+      end
+      0
     end
   end
 end
