@@ -16,11 +16,14 @@ require_relative "greater_than_expression"
 require_relative "less_than_or_equal_expression"
 require_relative "less_than_expression"
 require_relative "atom_expression"
+require_relative "list_expression"
 
 require_relative "constant"
 require_relative "literal"
-require_relative "func_reference"
 require_relative "variable_reference"
+require_relative "car"
+require_relative "cdr"
+require_relative "func_reference"
 require_relative "func_call"
 
 module LambdaLang
@@ -158,6 +161,18 @@ module LambdaLang
       if lexer.peek == "{"
         lexer.next
         parse_cons_expression
+      elsif lexer.peek == "("
+        lexer.next
+        parse_list_expression
+      elsif lexer.peek == "#"
+        lexer.next
+        AtomExpression.new(parse_term)
+      elsif lexer.peek == "'"
+        lexer.next
+        Car.new(parse_expression)
+      elsif lexer.peek == '"'
+        lexer.next
+        Cdr.new(parse_expression)
       elsif lexer.peek == "#"
         lexer.next
         AtomExpression.new(parse_term)
@@ -191,6 +206,23 @@ module LambdaLang
       fail "expected cons statement end" unless lexer.next == "}"
 
       ConsExpression.new(car, cdr)
+    end
+
+    def parse_list_expression
+      elements = [ ]
+      loop do
+        if lexer.peek == ")"
+          lexer.next
+          break
+        end
+
+        elements << parse_expression
+
+        if lexer.peek == ","
+          lexer.next
+        end
+      end
+      ListExpression.new(elements)
     end
 
     def parse_term

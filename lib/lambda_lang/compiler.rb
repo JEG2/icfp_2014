@@ -14,6 +14,7 @@ require_relative "greater_than_expression"
 require_relative "less_than_or_equal_expression"
 require_relative "less_than_expression"
 require_relative "atom_expression"
+require_relative "list_expression"
 
 require_relative "constant"
 require_relative "literal"
@@ -101,6 +102,15 @@ module LambdaLang
         compile_expression(expression.car, function)
         compile_expression(expression.cdr, function)
         write "CONS"
+      when ListExpression
+        next_notes << "list/head"
+        expression.elements.each do |element|
+          compile_expression(element, function)
+        end
+        write "LDC 0", "list/tail"
+        expression.elements.size.times do
+          write "CONS"
+        end
       when AdditionExpression
         compile_term(expression.left, function)
         compile_term(expression.right, function)
@@ -140,6 +150,12 @@ module LambdaLang
       when AtomExpression
         compile_term(expression.value, function)
         write "ATOM"
+      when Car
+        compile_expression(expression.cons, function)
+        write "CAR"
+      when Cdr
+        compile_expression(expression.cons, function)
+        write "CDR"
       when SingleTermExpression
         compile_term(expression.term, function)
       end
