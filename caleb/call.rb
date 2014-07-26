@@ -31,6 +31,10 @@ testLambdaMan = [[0],[16,11],[0],[3][5]]
 mymap = Discovermap.new(testmap,testLambdaMan)
 puts mymap
 p MAP.invert[mymap.get_cell_contents(16,11)]
+p MAP.invert[mymap.get_cell_contents(8,11)]
+p MAP.invert[mymap.get_cell_contents(10,12)]
+p MAP.invert[mymap.get_cell_contents(10,11)]
+p MAP.invert[mymap.get_cell_contents(10,10)]
 p mymap.get_cell_contents(1,1) 
 p mymap.get_available_moves(1,1) 
 puts "lambdaman position"
