@@ -1,5 +1,5 @@
 func main(initial_world, undocumented) {
-  debug {2 + 3, {42, 0}}
+  show({2 + 3, {42, 0}})
   {13, &step}
 }
 

@@ -186,7 +186,7 @@ module LambdaLang
           break
         end
 
-        arguments << parse_term
+        arguments << parse_expression
 
         if lexer.peek == ","
           lexer.next

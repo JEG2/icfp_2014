@@ -107,7 +107,7 @@ module LambdaLang
       when FuncCall
         term.arguments.each do |argument|
           next if argument == :stack
-          compile_term(argument, function)
+          compile_expression(argument, function)
         end
         write "LDF &#{term.name}"
         write "AP #{term.arguments.size}", "call/#{term.name}"
