@@ -1,0 +1,25 @@
+int 3        ;Get ghost's name
+move [4],A
+int 4        ;Get ghost's position
+move [5],A
+move [6],B   ;Finish Storing ghost's position
+init 1     ;Get Lambda Man's position
+move [7],A
+move [8],B ;Finish storing Lambda Man's position
+move A,[5]  ;Collect Wall info
+move B,[6]
+inc A
+int 7
+move [1],A
+move A,[5]
+dec A
+int 7
+move [3],A
+move A,[5]
+inc B
+int 7
+move [2],A
+move B,[6]
+dec B
+move [0],A  ;Finish Collecting Wall info
+

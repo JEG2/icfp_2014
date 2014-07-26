@@ -1,0 +1,3 @@
+init 1     ;Get Lambda Man's position
+move [7],A
+move [8],B ;Finish storing Lambda Man's position

@@ -1,0 +1,6 @@
+[0] - [3] - Contains the object in that direction
+[4]       - Ghost's Name
+[5]       - Ghost's x coordinate
+[6]       - Ghost's y coordinate
+[7]       - Lambda Man's x coordinate
+[8]       - Lambda Man's y coordinate
