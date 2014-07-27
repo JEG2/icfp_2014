@@ -24,10 +24,17 @@ mov A,[5]
 dec B
 int 7
 mov [0],A  ;Finish Collecting Wall info
-
-
-
-mov [9],0  ;intialize direction weights
+jgt f_setleftwall,[5],[13]  ;If current x is greater than previous x set left as wall
+jlt f_setrightwall,[5],[13] ;If current x is less than previous x set right as wall
+jgt f_setupwall,[6],[14]    ;If current y is greater than prevous y set up as wall 
+mov [2],0
+jeq f_wallset,0,0
+mov [3],0  ;f_setleftwall
+jeq f_wallset,0,0
+mov [1],0  ;f_setrightwall
+jeq f_wallset,0,0
+mov [0],0  ;f_setupwall
+mov [9],0  ;f_wallset intialize direction weights
 mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
