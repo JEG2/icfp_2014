@@ -4,10 +4,10 @@ if ARGV[0]
   file = ARGV[0]
 else
   puts "Enter File Name: "
-  file = gets.chomp
+  file_name = gets.chomp
 end
 
-File.open(file) do |file|
+File.open(file_name) do |file|
   target = ";f_"
   my_hash = Hash.new
   
@@ -34,7 +34,7 @@ File.open(file) do |file|
   
   file.rewind
   
-  File.open('parsed_ghost_logic.ghc', 'w') do |logic_file|
+  File.open("parsed_#{file_name}", 'w') do |logic_file|
     file.each do |line|
       line.gsub!(/ f_\w+/) { |match| " "+my_hash[match[1..-1]] }
       logic_file.write(line)
