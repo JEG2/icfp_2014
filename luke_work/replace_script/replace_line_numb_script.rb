@@ -1,4 +1,13 @@
-File.open('third.gcc') do |file|
+#!/usr/bin/env ruby
+
+# if ARGV[0]
+#   file = ARGV[0]
+# else
+#   puts "Enter File Name: "
+#   file = gets.chomp
+# end
+
+File.open(ARGV[0]) do |file|
   target = ";f_"
   my_hash = Hash.new
   
@@ -31,7 +40,4 @@ File.open('third.gcc') do |file|
       logic_file.write(line)
     end
   end
-  
-  puts "#{my_hash}"
-  
 end
