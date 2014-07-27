@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-# if ARGV[0]
-#   file = ARGV[0]
-# else
-#   puts "Enter File Name: "
-#   file = gets.chomp
-# end
+if ARGV[0]
+  file = ARGV[0]
+else
+  puts "Enter File Name: "
+  file = gets.chomp
+end
 
-File.open(ARGV[0]) do |file|
+File.open(file) do |file|
   target = ";f_"
   my_hash = Hash.new
   
