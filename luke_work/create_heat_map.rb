@@ -11,14 +11,16 @@ module HeatMap
                       [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]] 
                          ]
       @lambda_man_shit = [[0],[16,11],[0],[3][5]]
+      @fruit_status    = 1
     end
     
-    attr_reader :heat_map, :map, :ghost_shit, :dirs
+    attr_reader :heat_map, :map, :ghost_shit, :dirs, :fruit_status
     
     def create_heat_map(current_map)
       @map      = current_map
       @heat_map = current_map.dup
-      @dirs     = Discovermap.new(@map,@lambda_man_shit,@ghost_shit)
+      @dirs     = Discovermap.new(@map,@lambda_man_shit,@ghost_shit,
+                                  @fruit_status)
       @heat_map = set_up_heat_map
       @heat_map = apply_map_state
       apply_ghost_positions
@@ -46,8 +48,11 @@ module HeatMap
             # apply scores of starting map
             mapcell = @map[x][y]
             mapsymbol = MAP.invert[mapcell]
-            cell + SCORE[mapsymbol]
-            cell + SCORE[mapsymbol]
+            if @fruit_status == 0 && mapsymbol == :fruit
+              cell + 0
+            else
+              cell + SCORE[mapsymbol]
+            end
           else
             0
           end
