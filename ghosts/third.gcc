@@ -22,7 +22,9 @@ inc B
 int 7
 mov [2],A
 mov B,[6]
+mov A,[5]
 dec B
+int 7
 mov [0],A  ;Finish Collecting Wall info
 
 mov [9],0  ;intialize direction weights
@@ -30,78 +32,77 @@ mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
 ;determin the weights of which direction to mov based on lm location
-jgt 35,[5],[7]  ;jump if lm is on left
+jgt 38,[5],[7]  ;jump if lm is on left
 mov [10],[7]
 sub  [10],[5]
-jeq 39,0,0
-;35
-mov [10],[5]
-sub  [10],[7]
-;39
-jgt 44,[6],[8]  ;jump if lm is on up
+jeq 41,0,0
+;38
+mov [12],[5]
+sub  [12],[7]
+;41
+jgt 46,[6],[8]  ;jump if lm is on up
 mov [11],[8]
-sub  [11],[6]
-jeq 47,0,0
-;44
-mov [9],[5]
+sub [11],[6]
+jeq 49,0,0
+;46
+mov [9],[6]
 sub  [9],[8]
-;47
-jgt 55,[9],[11]   ;jump if up is better
-jgt 55,[10],[12]  ;jump if right is better
-jgt 55,[11],[12]  ;jump if down is better
-jeq 55,[3],0      ;jump if left is wall
+;49
+jgt 57,[9],[11]   ;jump if up is better
+jgt 57,[10],[12]  ;jump if right is better
+jgt 57,[11],[12]  ;jump if down is better
+jeq 57,[3],0      ;jump if left is wall
 mov A,3
 int 0               ;mov left
 hlt
-;55
-jgt 62,[9],[11]   ;jump if up is better
-jgt 62,[11],[10]  ;jump if down is better
-jeq 62,[1],0      ;jump if left is wall
+;57
+jgt 64,[9],[11]   ;jump if up is better
+jgt 64,[11],[10]  ;jump if down is better
+jeq 64,[1],0      ;jump if left is wall
 mov A,1
 int 0               ;mov right
 hlt
-;62
-jgt 68,[9],[11]   ;jump if up is better
-jeq 68,[2],0      ;jump if down is wall
+;64
+jgt 70,[9],[11]   ;jump if up is better
+jeq 70,[2],0      ;jump if down is wall
 mov A,2
 int 0               ;mov down
 hlt
-;68
-jeq 74,[0],0      ;jump if down is wall
-mov A,2
+;70
+jeq 75,[0],0      ;jump if up is wall
 mov A,0
 int 0
 hlt
-;74
-jgt 81,[10],[12]  ;jump if right is better
-jgt 81,[11],[12]  ;jump if down is better
-jeq 81,[3],0      ;jump if left is wall
+;75
+jgt 82,[10],[12]  ;jump if right is better
+jgt 82,[11],[12]  ;jump if down is better
+jeq 82,[3],0      ;jump if left is wall
 mov A,3
 int 0               ;mov left
 hlt
-;81
-jgt 87,[11],[12]  ;jump if down is better
-jeq 87,[1],0      ;jump if right is wall
+;82
+jgt 88,[11],[12]  ;jump if down is better
+jeq 88,[1],0      ;jump if right is wall
 mov A,1
 int 0               ;mov right
 hlt
-;87
-jeq 92,[2],0      ;jump if down is wall
+;88
+jeq 93,[2],0      ;jump if down is wall
 mov A,2
 int 0               ;mov down
 hlt
-;92
-jgt 98,[10],[12]  ;jump if right is better
-jeq 98,[3],0      ;jump if left is wall
+;93
+jgt 99,[10],[12]  ;jump if right is better
+jeq 99,[3],0      ;jump if left is wall
 mov A,3
 int 0               ;mov left
 hlt
-;98
-jeq 103,[1],0      ;jump if right is wall
+;99
+jeq 104,[1],0      ;jump if right is wall
 mov A,1
 int 0               ;mov right
 hlt
-;103
-mov A,1
+;104
+mov A,3
 int 0               ;mov left
 hlt
