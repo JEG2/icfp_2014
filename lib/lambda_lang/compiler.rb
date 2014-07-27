@@ -207,7 +207,9 @@ module LambdaLang
     def resolve_references
       lines.each_with_index do |line, i|
         line.first.sub!(/\ALDF\s+&(\w+)\z/) {
-          "LDF #{lines.find_index { |_, notes| notes.include?('func/' + $1) }}"
+          i = lines.find_index { |_, notes| notes.include?('func/' + $1) }
+          fail "unknown reference:  #{$1}" unless i
+          "LDF #{i}"
         }
         line.first.gsub!(/>((?:if|else)\/\d+)/) {
           lines[i..-1].find_index { |_, notes| notes.include?($1) } + i
