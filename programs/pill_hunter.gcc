@@ -1,0 +1,654 @@
+LD 0 0       ; 0: func/main: var/initial_world
+LDF 6        ; 1
+AP 1         ; 2: call/build_wandering_map
+LDF 33       ; 3
+CONS         ; 4
+RTN          ; 5: func/main
+LD 0 0       ; 6: func/build_wandering_map: var/world
+CAR          ; 7
+LDF 15       ; 8
+LDC 0        ; 9
+LD 0 0       ; 10: var/world
+CAR          ; 11
+LDF 481      ; 12
+AP 4         ; 13: call/map_with_index
+RTN          ; 14: func/build_wandering_map
+LD 0 0       ; 15: func/build_wandering_row: var/row
+LDF 24       ; 16
+LDC 0        ; 17
+LD 0 1       ; 18: var/y
+LD 0 2       ; 19: var/map
+CONS         ; 20
+LDF 481      ; 21
+AP 4         ; 22: call/map_with_index
+RTN          ; 23: func/build_wandering_row
+LD 0 0       ; 24: func/build_wandering_cell: var/cell
+LDC 0        ; 25: const/WALL
+CEQ          ; 26
+SEL 29 31    ; 27: if_else/0
+RTN          ; 28: func/build_wandering_cell
+LDC 0        ; 29: if/0: const/WALL
+JOIN         ; 30: if/0
+LDC 4        ; 31: else/0
+JOIN         ; 32: else/0
+LD 0 0       ; 33: func/step: var/ai_state
+LD 0 1       ; 34: var/current_world
+LD 0 1       ; 35: var/current_world
+LDF 55       ; 36
+AP 1         ; 37: call/find_pill
+LDF 41       ; 38
+AP 3         ; 39: call/eat_pill_or_wander
+RTN          ; 40: func/step
+LD 0 2       ; 41: func/eat_pill_or_wander: var/pill_direction
+LDC 4        ; 42
+CEQ          ; 43
+SEL 46 51    ; 44: if_else/0
+RTN          ; 45: func/eat_pill_or_wander
+LD 0 0       ; 46: if/0: var/ai_state
+LD 0 1       ; 47: var/current_world
+LDF 90       ; 48
+AP 2         ; 49: call/wander
+JOIN         ; 50: if/0
+LD 0 0       ; 51: else/0: var/ai_state
+LD 0 2       ; 52: var/pill_direction
+CONS         ; 53
+JOIN         ; 54: else/0
+LDC 0        ; 55: func/find_pill
+LDC 3        ; 56
+LDC 4        ; 57
+LDF 63       ; 58
+LD 0 0       ; 59: var/current_world
+LDF 437      ; 60
+AP 5         ; 61: call/find_between
+RTN          ; 62: func/find_pill
+LD 0 1       ; 63: func/has_pill: var/world
+LDF 525      ; 64
+AP 1         ; 65: call/where_am_i
+LD 0 0       ; 66: var/direction
+LDF 162      ; 67
+AP 2         ; 68: call/next_to
+LD 0 1       ; 69: var/world
+CAR          ; 70
+LDF 146      ; 71
+AP 2         ; 72: call/get_cell
+LDC 2        ; 73: const/PILL
+CEQ          ; 74
+LD 0 1       ; 75: var/world
+LDF 525      ; 76
+AP 1         ; 77: call/where_am_i
+LD 0 0       ; 78: var/direction
+LDF 162      ; 79
+AP 2         ; 80: call/next_to
+LD 0 1       ; 81: var/world
+CAR          ; 82
+LDF 146      ; 83
+AP 2         ; 84: call/get_cell
+LDC 3        ; 85: const/POWER_PILL
+CEQ          ; 86
+LDF 605      ; 87
+AP 2         ; 88: call/or
+RTN          ; 89: func/has_pill
+LD 0 1       ; 90: func/wander: var/world
+LDF 525      ; 91
+AP 1         ; 92: call/where_am_i
+LD 0 0       ; 93: var/wandering_map
+LD 0 1       ; 94: var/world
+LDF 98       ; 95
+AP 3         ; 96: call/wander_and_update_map
+RTN          ; 97: func/wander
+LD 0 0       ; 98: func/wander_and_update_map: var/xy
+LD 0 2       ; 99: var/world
+CAR          ; 100
+LDF 213      ; 101
+AP 2         ; 102: call/is_junction
+LD 0 0       ; 103: var/xy
+LD 0 2       ; 104: var/world
+LDF 531      ; 105
+AP 1         ; 106: call/my_direction
+LDF 162      ; 107
+AP 2         ; 108: call/next_to
+LD 0 2       ; 109: var/world
+CAR          ; 110
+LDF 263      ; 111
+AP 2         ; 112: call/is_wall
+LDF 605      ; 113
+AP 2         ; 114: call/or
+SEL 117 132  ; 115: if_else/0
+RTN          ; 116: func/wander_and_update_map
+LD 0 0       ; 117: if/0: var/xy
+LD 0 1       ; 118: var/wandering_map
+LD 0 2       ; 119: var/world
+LDF 525      ; 120
+AP 1         ; 121: call/where_am_i
+LD 0 1       ; 122: var/wandering_map
+LDF 146      ; 123
+AP 2         ; 124: call/get_cell
+LDC 1        ; 125
+LDC 3        ; 126
+LDF 594      ; 127
+AP 3         ; 128: call/sub_with_wrap
+LDF 138      ; 129
+AP 3         ; 130: call/update_map
+JOIN         ; 131: if/0
+LD 0 1       ; 132: else/0: var/wandering_map
+LD 0 2       ; 133: var/world
+LDF 531      ; 134
+AP 1         ; 135: call/my_direction
+CONS         ; 136
+JOIN         ; 137: else/0
+LD 0 1       ; 138: func/update_map: var/wandering_map
+LD 0 0       ; 139: var/xy
+LD 0 2       ; 140: var/move
+LDF 293      ; 141
+AP 3         ; 142: call/edit_map
+LD 0 2       ; 143: var/move
+CONS         ; 144
+RTN          ; 145: func/update_map
+LD 0 0       ; 146: func/get_cell: var/xy
+CAR          ; 147
+LDF 339      ; 148
+LD 0 0       ; 149: var/xy
+CDR          ; 150
+LDF 339      ; 151
+LD 0 1       ; 152: var/map
+LDF 378      ; 153
+AP 3         ; 154: call/reduce_by_count
+LDF 336      ; 155
+AP 1         ; 156: call/car
+LDF 378      ; 157
+AP 3         ; 158: call/reduce_by_count
+LDF 336      ; 159
+AP 1         ; 160: call/car
+RTN          ; 161: func/get_cell
+LD 0 1       ; 162: func/next_to: var/direction
+LDC 0        ; 163
+CEQ          ; 164
+SEL 167 176  ; 165: if_else/0
+RTN          ; 166: func/next_to
+LD 0 0       ; 167: if/0: var/xy
+CAR          ; 168
+LD 0 0       ; 169: var/xy
+CDR          ; 170
+LDC 1        ; 171
+LDF 576      ; 172
+AP 2         ; 173: call/sub
+CONS         ; 174
+JOIN         ; 175: if/0
+LD 0 1       ; 176: else/0: var/direction
+LDC 1        ; 177
+CEQ          ; 178
+SEL 181 190  ; 179: if_else/1
+JOIN         ; 180: else/0
+LD 0 0       ; 181: if/1: var/xy
+CAR          ; 182
+LDC 1        ; 183
+LDF 572      ; 184
+AP 2         ; 185: call/add
+LD 0 0       ; 186: var/xy
+CDR          ; 187
+CONS         ; 188
+JOIN         ; 189: if/1
+LD 0 1       ; 190: else/1: var/direction
+LDC 2        ; 191
+CEQ          ; 192
+SEL 195 204  ; 193: if_else/2
+JOIN         ; 194: else/1
+LD 0 0       ; 195: if/2: var/xy
+CAR          ; 196
+LD 0 0       ; 197: var/xy
+CDR          ; 198
+LDC 1        ; 199
+LDF 572      ; 200
+AP 2         ; 201: call/add
+CONS         ; 202
+JOIN         ; 203: if/2
+LD 0 0       ; 204: else/2: var/xy
+CAR          ; 205
+LDC 1        ; 206
+LDF 576      ; 207
+AP 2         ; 208: call/sub
+LD 0 0       ; 209: var/xy
+CDR          ; 210
+CONS         ; 211
+JOIN         ; 212: else/2
+LD 0 0       ; 213: func/is_junction: var/xy
+LD 0 1       ; 214: var/map
+LDF 228      ; 215
+AP 2         ; 216: call/sum_walls
+LDC 2        ; 217
+LDF 645      ; 218
+AP 2         ; 219: call/ne
+RTN          ; 220: func/is_junction
+LD 0 0       ; 221: func/is_dead_end: var/xy
+LD 0 1       ; 222: var/map
+LDF 228      ; 223
+AP 2         ; 224: call/sum_walls
+LDC 3        ; 225
+CEQ          ; 226
+RTN          ; 227: func/is_dead_end
+LD 0 0       ; 228: func/sum_walls: var/xy
+LDC 0        ; 229: const/UP
+LDF 162      ; 230
+AP 2         ; 231: call/next_to
+LD 0 1       ; 232: var/map
+LDF 263      ; 233
+AP 2         ; 234: call/is_wall
+LD 0 0       ; 235: var/xy
+LDC 1        ; 236: const/RIGHT
+LDF 162      ; 237
+AP 2         ; 238: call/next_to
+LD 0 1       ; 239: var/map
+LDF 263      ; 240
+AP 2         ; 241: call/is_wall
+LD 0 0       ; 242: var/xy
+LDC 2        ; 243: const/DOWN
+LDF 162      ; 244
+AP 2         ; 245: call/next_to
+LD 0 1       ; 246: var/map
+LDF 263      ; 247
+AP 2         ; 248: call/is_wall
+LD 0 0       ; 249: var/xy
+LDC 3        ; 250: const/LEFT
+LDF 162      ; 251
+AP 2         ; 252: call/next_to
+LD 0 1       ; 253: var/map
+LDF 263      ; 254
+AP 2         ; 255: call/is_wall
+LDF 572      ; 256
+AP 2         ; 257: call/add
+LDF 572      ; 258
+AP 2         ; 259: call/add
+LDF 572      ; 260
+AP 2         ; 261: call/add
+RTN          ; 262: func/sum_walls
+LD 0 0       ; 263: func/is_wall: var/xy
+LD 0 1       ; 264: var/map
+LDF 146      ; 265
+AP 2         ; 266: call/get_cell
+LDC 0        ; 267: const/WALL
+CEQ          ; 268
+RTN          ; 269: func/is_wall
+LDC 0        ; 270: func/only_move
+LDC 3        ; 271
+LDC 3        ; 272
+LDF 280      ; 273
+LD 0 0       ; 274: var/xy
+LD 0 1       ; 275: var/map
+CONS         ; 276
+LDF 437      ; 277
+AP 5         ; 278: call/find_between
+RTN          ; 279: func/only_move
+LD 0 1       ; 280: func/find_only_move: var/xy_and_map
+CAR          ; 281
+LD 0 0       ; 282: var/direction
+LDF 162      ; 283
+AP 2         ; 284: call/next_to
+LD 0 1       ; 285: var/xy_and_map
+CDR          ; 286
+LDF 146      ; 287
+AP 2         ; 288: call/get_cell
+LDC 0        ; 289: const/WALL
+LDF 645      ; 290
+AP 2         ; 291: call/ne
+RTN          ; 292: func/find_only_move
+LD 0 0       ; 293: func/edit_map: var/map
+LDF 302      ; 294
+LDC 0        ; 295
+LD 0 1       ; 296: var/xy
+LD 0 2       ; 297: var/new_cell
+CONS         ; 298
+LDF 481      ; 299
+AP 4         ; 300: call/map_with_index
+RTN          ; 301: func/edit_map
+LD 0 0       ; 302: func/edit_row: var/row
+LDF 311      ; 303
+LDC 0        ; 304
+LD 0 1       ; 305: var/y
+LD 0 2       ; 306: var/xy_and_new_cell
+CONS         ; 307
+LDF 481      ; 308
+AP 4         ; 309: call/map_with_index
+RTN          ; 310: func/edit_row
+LD 0 1       ; 311: func/edit_cell: var/x
+LD 0 2       ; 312: var/y_and_xy_and_new_cell
+CDR          ; 313
+CAR          ; 314
+CAR          ; 315
+LDF 641      ; 316
+AP 2         ; 317: call/eq
+LD 0 2       ; 318: var/y_and_xy_and_new_cell
+CAR          ; 319
+LD 0 2       ; 320: var/y_and_xy_and_new_cell
+CDR          ; 321
+CAR          ; 322
+CDR          ; 323
+LDF 641      ; 324
+AP 2         ; 325: call/eq
+LDF 614      ; 326
+AP 2         ; 327: call/and
+SEL 330 334  ; 328: if_else/0
+RTN          ; 329: func/edit_cell
+LD 0 2       ; 330: if/0: var/y_and_xy_and_new_cell
+CDR          ; 331
+CDR          ; 332
+JOIN         ; 333: if/0
+LD 0 0       ; 334: else/0: var/cell
+JOIN         ; 335: else/0
+LD 0 0       ; 336: func/car: var/cons
+CAR          ; 337
+RTN          ; 338: func/car
+LD 0 0       ; 339: func/cdr: var/cons
+CDR          ; 340
+RTN          ; 341: func/cdr
+LD 0 0       ; 342: func/does_include: var/list
+ATOM         ; 343
+SEL 346 348  ; 344: if_else/0
+RTN          ; 345: func/does_include
+LDC 0        ; 346: if/0
+JOIN         ; 347: if/0
+LD 0 0       ; 348: else/0: var/list
+CAR          ; 349
+LD 0 1       ; 350: var/element
+LDF 641      ; 351
+AP 2         ; 352: call/eq
+SEL 355 357  ; 353: if_else/1
+JOIN         ; 354: else/0
+LDC 1        ; 355: if/1
+JOIN         ; 356: if/1
+LD 0 0       ; 357: else/1: var/list
+CDR          ; 358
+LD 0 1       ; 359: var/element
+LDF 342      ; 360
+AP 2         ; 361: call/does_include
+JOIN         ; 362: else/1
+LD 0 0       ; 363: func/repeat: var/count
+LDC 0        ; 364
+CGT          ; 365
+SEL 368 377  ; 366: if_else/0
+RTN          ; 367: func/repeat
+LD 0 1       ; 368: if/0: var/action
+AP 0         ; 369: call/&action
+LD 0 0       ; 370: var/count
+LDC 1        ; 371
+SUB          ; 372
+LD 0 1       ; 373: var/action
+LDF 363      ; 374
+AP 2         ; 375: call/repeat
+JOIN         ; 376: if/0
+JOIN         ; 377: else/0
+LD 0 0       ; 378: func/reduce_by_count: var/count
+LDC 0        ; 379
+CGT          ; 380
+SEL 383 393  ; 381: if_else/0
+RTN          ; 382: func/reduce_by_count
+LD 0 0       ; 383: if/0: var/count
+LDC 1        ; 384
+SUB          ; 385
+LD 0 1       ; 386: var/transformer
+LD 0 2       ; 387: var/initial
+LD 0 1       ; 388: var/transformer
+AP 1         ; 389: call/&transformer
+LDF 378      ; 390
+AP 3         ; 391: call/reduce_by_count
+JOIN         ; 392: if/0
+LD 0 2       ; 393: else/0: var/initial
+JOIN         ; 394: else/0
+LD 0 0       ; 395: func/reduce_with_index: var/list
+ATOM         ; 396
+SEL 399 401  ; 397: if_else/0
+RTN          ; 398: func/reduce_with_index
+LD 0 3       ; 399: if/0: var/initial
+JOIN         ; 400: if/0
+LDC 42       ; 401: else/0
+DBUG         ; 402
+LD 0 0       ; 403: var/list
+CDR          ; 404
+DBUG         ; 405
+LD 0 2       ; 406: var/index
+LDC 1        ; 407
+ADD          ; 408
+DBUG         ; 409
+LD 0 3       ; 410: var/initial
+DBUG         ; 411
+LD 0 0       ; 412: var/list
+CAR          ; 413
+DBUG         ; 414
+LD 0 2       ; 415: var/index
+DBUG         ; 416
+LD 0 4       ; 417: var/args
+DBUG         ; 418
+LDC 13       ; 419
+DBUG         ; 420
+LD 0 0       ; 421: var/list
+CDR          ; 422
+LD 0 1       ; 423: var/transformer
+LD 0 2       ; 424: var/index
+LDC 1        ; 425
+ADD          ; 426
+LD 0 3       ; 427: var/initial
+LD 0 0       ; 428: var/list
+CAR          ; 429
+LD 0 2       ; 430: var/index
+LD 0 4       ; 431: var/args
+LD 0 1       ; 432: var/transformer
+AP 4         ; 433: call/&transformer
+LDF 395      ; 434
+AP 5         ; 435: call/reduce_with_index
+JOIN         ; 436: else/0
+LD 0 0       ; 437: func/find_between: var/from
+LD 0 4       ; 438: var/args
+LD 0 3       ; 439: var/test
+AP 2         ; 440: call/&test
+LDC 0        ; 441
+CGT          ; 442
+SEL 445 447  ; 443: if_else/0
+RTN          ; 444: func/find_between
+LD 0 0       ; 445: if/0: var/from
+JOIN         ; 446: if/0
+LD 0 1       ; 447: else/0: var/to
+LD 0 0       ; 448: var/from
+CGT          ; 449
+SEL 452 462  ; 450: if_else/1
+JOIN         ; 451: else/0
+LD 0 0       ; 452: if/1: var/from
+LDC 1        ; 453
+ADD          ; 454
+LD 0 1       ; 455: var/to
+LD 0 2       ; 456: var/default
+LD 0 3       ; 457: var/test
+LD 0 4       ; 458: var/args
+LDF 437      ; 459
+AP 5         ; 460: call/find_between
+JOIN         ; 461: if/1
+LD 0 2       ; 462: else/1: var/default
+JOIN         ; 463: else/1
+LD 0 0       ; 464: func/map: var/list
+ATOM         ; 465
+SEL 468 470  ; 466: if_else/0
+RTN          ; 467: func/map
+LD 0 0       ; 468: if/0: var/list
+JOIN         ; 469: if/0
+LD 0 0       ; 470: else/0: var/list
+CAR          ; 471
+LD 0 1       ; 472: var/transformer
+AP 1         ; 473: call/&transformer
+LD 0 0       ; 474: var/list
+CDR          ; 475
+LD 0 1       ; 476: var/transformer
+LDF 464      ; 477
+AP 2         ; 478: call/map
+CONS         ; 479
+JOIN         ; 480: else/0
+LD 0 0       ; 481: func/map_with_index: var/list
+ATOM         ; 482
+SEL 485 487  ; 483: if_else/0
+RTN          ; 484: func/map_with_index
+LD 0 0       ; 485: if/0: var/list
+JOIN         ; 486: if/0
+LD 0 0       ; 487: else/0: var/list
+CAR          ; 488
+LD 0 2       ; 489: var/index
+LD 0 3       ; 490: var/args
+LD 0 1       ; 491: var/transformer
+AP 3         ; 492: call/&transformer
+LD 0 0       ; 493: var/list
+CDR          ; 494
+LD 0 1       ; 495: var/transformer
+LD 0 2       ; 496: var/index
+LDC 1        ; 497
+ADD          ; 498
+LD 0 3       ; 499: var/args
+LDF 481      ; 500
+AP 4         ; 501: call/map_with_index
+CONS         ; 502
+JOIN         ; 503: else/0
+LD 0 0       ; 504: func/each_with_index: var/list
+ATOM         ; 505
+SEL 508 509  ; 506: if_else/0
+RTN          ; 507: func/each_with_index
+JOIN         ; 508: if/0
+LD 0 0       ; 509: else/0: var/list
+CAR          ; 510
+LD 0 2       ; 511: var/index
+LD 0 3       ; 512: var/args
+LD 0 1       ; 513: var/action
+AP 3         ; 514: call/&action
+LD 0 0       ; 515: var/list
+CDR          ; 516
+LD 0 1       ; 517: var/action
+LD 0 2       ; 518: var/index
+LDC 1        ; 519
+ADD          ; 520
+LD 0 3       ; 521: var/args
+LDF 504      ; 522
+AP 4         ; 523: call/each_with_index
+JOIN         ; 524: else/0
+LD 0 0       ; 525: func/where_am_i: var/world
+CDR          ; 526
+CAR          ; 527
+CDR          ; 528
+CAR          ; 529
+RTN          ; 530: func/where_am_i
+LD 0 0       ; 531: func/my_direction: var/world
+CDR          ; 532
+CAR          ; 533
+CDR          ; 534
+CDR          ; 535
+CAR          ; 536
+RTN          ; 537: func/my_direction
+LD 0 0       ; 538: func/is_fruit_active: var/world
+LDF 544      ; 539
+AP 1         ; 540: call/fruit_countdown
+LDC 0        ; 541
+CGT          ; 542
+RTN          ; 543: func/is_fruit_active
+LD 0 0       ; 544: func/fruit_countdown: var/world
+CDR          ; 545
+CDR          ; 546
+CDR          ; 547
+RTN          ; 548: func/fruit_countdown
+LD 0 0       ; 549: func/left: var/direction
+LDC 0        ; 550
+CEQ          ; 551
+SEL 554 556  ; 552: if_else/0
+RTN          ; 553: func/left
+LDC 3        ; 554: if/0
+JOIN         ; 555: if/0
+LD 0 0       ; 556: else/0: var/direction
+LDC 1        ; 557
+CEQ          ; 558
+SEL 561 563  ; 559: if_else/1
+JOIN         ; 560: else/0
+LDC 0        ; 561: if/1
+JOIN         ; 562: if/1
+LD 0 0       ; 563: else/1: var/direction
+LDC 2        ; 564
+CEQ          ; 565
+SEL 568 570  ; 566: if_else/2
+JOIN         ; 567: else/1
+LDC 1        ; 568: if/2
+JOIN         ; 569: if/2
+LDC 2        ; 570: else/2
+JOIN         ; 571: else/2
+LD 0 0       ; 572: func/add: var/l
+LD 0 1       ; 573: var/r
+ADD          ; 574
+RTN          ; 575: func/add
+LD 0 0       ; 576: func/sub: var/l
+LD 0 1       ; 577: var/r
+SUB          ; 578
+RTN          ; 579: func/sub
+LDC 255      ; 580: func/add_with_wrap
+LD 0 0       ; 581: var/l
+LDF 576      ; 582
+AP 2         ; 583: call/sub
+LD 0 1       ; 584: var/r
+CGT          ; 585
+SEL 588 590  ; 586: if_else/0
+RTN          ; 587: func/add_with_wrap
+LD 0 2       ; 588: if/0: var/wrap_to
+JOIN         ; 589: if/0
+LD 0 0       ; 590: else/0: var/l
+LD 0 1       ; 591: var/r
+ADD          ; 592
+JOIN         ; 593: else/0
+LD 0 1       ; 594: func/sub_with_wrap: var/r
+LD 0 0       ; 595: var/l
+CGT          ; 596
+SEL 599 601  ; 597: if_else/0
+RTN          ; 598: func/sub_with_wrap
+LD 0 2       ; 599: if/0: var/wrap_to
+JOIN         ; 600: if/0
+LD 0 0       ; 601: else/0: var/l
+LD 0 1       ; 602: var/r
+SUB          ; 603
+JOIN         ; 604: else/0
+LD 0 0       ; 605: func/or: var/l
+LDC 0        ; 606
+CGT          ; 607
+SEL 610 612  ; 608: if_else/0
+RTN          ; 609: func/or
+LD 0 0       ; 610: if/0: var/l
+JOIN         ; 611: if/0
+LD 0 1       ; 612: else/0: var/r
+JOIN         ; 613: else/0
+LD 0 0       ; 614: func/and: var/l
+LDC 0        ; 615
+CGT          ; 616
+SEL 619 624  ; 617: if_else/0
+RTN          ; 618: func/and
+LD 0 1       ; 619: if/0: var/r
+LDC 0        ; 620
+CGT          ; 621
+SEL 626 628  ; 622: if_else/1
+JOIN         ; 623: if/0
+LDC 0        ; 624: else/0
+JOIN         ; 625: else/0
+LD 0 1       ; 626: if/1: var/r
+JOIN         ; 627: if/1
+LDC 0        ; 628: else/1
+JOIN         ; 629: else/1
+LD 0 0       ; 630: func/if_eq: var/value
+LD 0 1       ; 631: var/test
+CEQ          ; 632
+SEL 635 639  ; 633: if_else/0
+RTN          ; 634: func/if_eq
+LD 0 3       ; 635: if/0: var/args
+LD 0 2       ; 636: var/action
+AP 1         ; 637: call/&action
+JOIN         ; 638: if/0
+LD 0 0       ; 639: else/0: var/value
+JOIN         ; 640: else/0
+LD 0 0       ; 641: func/eq: var/l
+LD 0 1       ; 642: var/r
+CEQ          ; 643
+RTN          ; 644: func/eq
+LD 0 0       ; 645: func/ne: var/l
+LD 0 1       ; 646: var/r
+CEQ          ; 647
+SEL 650 652  ; 648: if_else/0
+RTN          ; 649: func/ne
+LDC 0        ; 650: if/0
+JOIN         ; 651: if/0
+LDC 1        ; 652: else/0
+JOIN         ; 653: else/0
