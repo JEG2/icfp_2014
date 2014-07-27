@@ -179,7 +179,9 @@ module LambdaLang
           compile_expression(argument, function)
         end
         write "LDF &#{term.name}"
-        write "AP #{term.arguments.size}", "call/#{term.name}"
+        func = functions.find { |f| f.name == term.name }
+        fail "failed to find named func:  #{term.name}" unless func
+        write "AP #{func.parameters.size}", "call/#{term.name}"
       when AnonymousFuncCall
         term.arguments.each do |argument|
           next if argument == :stack
