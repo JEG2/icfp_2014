@@ -1,5 +1,0 @@
-int 3        ;Get ghost's name
-move [4],A
-int 4        ;Get ghost's position
-move [5],A
-move [6],B   ;Finish Storing ghost's position
