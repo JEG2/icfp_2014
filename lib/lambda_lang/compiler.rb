@@ -171,7 +171,7 @@ module LambdaLang
         write "LDF &#{term.name}"
       when VariableReference
         i = function.parameters.index(term.name)
-        fail "unknown variable" unless i
+        fail "unknown variable:  #{term.name}" unless i
         write "LD 0 #{i}", "var/#{term.name}"
       when FuncCall
         term.arguments.each do |argument|
