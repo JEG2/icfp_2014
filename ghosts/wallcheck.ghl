@@ -1,0 +1,16 @@
+move A,[5]  ;Collect Wall info
+move B,[6]
+inc A
+int 7
+move [1],A
+move A,[5]
+dec A
+int 7
+move [3],A
+move A,[5]
+inc B
+int 7
+move [2],A
+move B,[6]
+dec B
+move [0],A  ;Finish Collecting Wall info
