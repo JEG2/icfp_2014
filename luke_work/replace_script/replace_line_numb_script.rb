@@ -1,4 +1,4 @@
-File.open('third.gcc') do |file|
+File.open(ARGV[0]) do |file|
   target = ";f_"
   my_hash = Hash.new
   
