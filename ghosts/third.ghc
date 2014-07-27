@@ -50,24 +50,32 @@ sub [11],[6]
 jeq 52,0,0
 mov [9],[6] ;f_lmisup
 sub [9],[8]
-add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
-add [10],[1]
-add [11],[2]
-add [12],[3]
-jgt 61,[9],[12]      ;jump if up is better
-jgt 65,[10],[12]  ;jump if right is better
-jgt 68,[11],[12]  ;jump if down is best
+jgt 54,[0],[0]    ;f_lmweighted :Add surrounding objects to the weight
+mov [9],0
+add [9],[0]               ;f_noupwall
+jgt 57,[1],[0]
+mov [10],0
+add [10],[1]              ;f_norightwall
+jgt 60,[2],[0]
+mov [11],0
+add [11],[2]              ;f_nodownwall
+jgt 63,[3],[0]
+mov [12],0
+add [12],[3]              ;f_noleftwall
+jgt 69,[9],[12]      ;f_path jump if up is better
+jgt 73,[10],[12]  ;jump if right is better
+jgt 76,[11],[12]  ;jump if down is best
 mov A,3                   ;set move direction to left
-jeq 70,0,0
-jgt 65,[10],[9]   ;f_bigup :jump if right is better
-jgt 68,[11],[9]   ;jump if down is best
+jeq 78,0,0
+jgt 73,[10],[9]   ;f_bigup :jump if right is better
+jgt 76,[11],[9]   ;jump if down is best
 mov A,0                   ;set move direction to left
-jeq 70,0,0
-jgt 68,[11],[10]  ;f_bigright :jump if down is best
+jeq 78,0,0
+jgt 76,[11],[10]  ;f_bigright :jump if down is best
 mov A,1                   ;set move direction to left
-jeq 70,0,0
-mov A,2			  ;f_bestdown
-jeq 70,0,0       
+jeq 78,0,0
+mov A,2                   ;f_bestdown
+jeq 78,0,0
 int 0               ;f_end make chosen move
 mov [13],[5]        ;Cache current location
 mov [14],[6]	    
