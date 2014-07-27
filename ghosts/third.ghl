@@ -24,7 +24,9 @@ mov A,[5]
 dec B
 int 7
 mov [0],A  ;Finish Collecting Wall info
-int 8
+
+
+
 mov [9],0  ;intialize direction weights
 mov [10],0
 mov [11],0
@@ -45,48 +47,42 @@ jgt f_50,[9],[11]   ;f_43 jump if up is better
 jgt f_50,[10],[12]  ;jump if right is better
 jgt f_50,[11],[12]  ;jump if down is better
 jeq f_50,[3],0      ;jump if left is wall
-mov A,3
-int 0               ;mov left
-hlt
+mov A,3             ;set move direction to left
+jeq f_end,0,0
 jgt f_56,[9],[11]   ;f_50 jump if up is better
 jgt f_56,[11],[10]  ;jump if down is better
 jeq f_56,[1],0      ;jump if left is wall
-mov A,1
-int 0               ;mov right
-hlt
+mov A,1             ;set move directon to right
+jeq f_end,0,0
 jgt f_61,[9],[11]   ;f_56 jump if up is better
 jeq f_61,[2],0      ;jump if down is wall
-mov A,2
-int 0               ;mov down
-hlt
+mov A,2             ;set move direction to down
+jeq f_end,0,0
 jeq f_65,[0],0      ;f_61 jump if up is wall
-mov A,0
-int 0
-hlt
+mov A,0             ;set move direction to up
+jeq f_end,0,0
 jgt f_71,[10],[12]  ;f_65 jump if right is better
 jgt f_71,[11],[12]  ;jump if down is better
 jeq f_71,[3],0      ;jump if left is wall
-mov A,3
-int 0               ;mov left
-hlt
+mov A,3             ;set move direction to left
+jeq f_end,0,0
 jgt f_76,[11],[12]  ;f_71 jump if down is better
 jeq f_76,[1],0      ;jump if right is wall
-mov A,1
-int 0               ;mov right
-hlt
+mov A,1             ;set move direction to right
+jeq f_end,0,0
 jeq f_80,[2],0      ;f_76 jump if down is wall
-mov A,2
-int 0               ;mov down
-hlt
+mov A,2             ;set move direction to down
+jeq f_end,0,0
 jgt f_85,[10],[12]  ;f_80 jump if right is better
 jeq f_85,[3],0      ;jump if left is wall
-mov A,3
-int 0               ;mov left
-hlt
+mov A,3             ;set move direction to left
+jeq f_end,0,0
 jeq f_85,[1],0      ;85 jump if right is wall
-mov A,1
-int 0               ;mov right
-hlt
-mov A,3    ;f_85
-int 0               ;mov left
+mov A,1             ;set move direction to right
+jeq f_end,0,0
+mov A,3    ;f_85 set move direction to left
+jeq f_end,0,0
+int 0               ;f_end make chosen move
+mov [13],[5]        ;Cache current location
+mov [14],[6]	    
 hlt

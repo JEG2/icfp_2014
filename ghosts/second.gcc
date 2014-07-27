@@ -1,5 +1,0 @@
-jgt 2,A,0
-mov A,4
-dec A      
-int 0      ;invoke move
-hlt
