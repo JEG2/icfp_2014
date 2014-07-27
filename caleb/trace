@@ -1,0 +1,150 @@
+int 3        ;Get ghost's name
+-->int 8	trace ghost0: 1 0 0 0 0 0 0 0 0
+mov [4],A
+int 4        ;Get ghost's position
+mov [5],A
+-->int 8	trace ghost0: 5 11 8 0 0 0 0 0 0
+mov [6],B   ;Finish Storing ghost's position
+-->int 8	trace ghost0: 7 11 8 0 0 0 0 0 0
+int 1     ;Get Lambda Man's position
+-->int 8	trace ghost0: 9 16 4 0 0 0 0 0 0
+mov [7],A
+-->int 8	trace ghost0: 11 16 4 0 0 0 0 0 0
+mov [8],B ;Finish storing Lambda Man's position
+-->int 8	trace ghost0: 13 16 4 0 0 0 0 0 0
+mov A,[5]  ;Collect Wall info
+-->int 8	trace ghost0: 15 11 4 0 0 0 0 0 0
+mov B,[6]
+-->int 8	trace ghost0: 17 11 8 0 0 0 0 0 0
+inc A
+int 7
+-->int 8	trace ghost0: 20 1 8 0 0 0 0 0 0
+mov [1],A
+-->int 8	trace ghost0: 22 1 8 0 0 0 0 0 0
+mov A,[5]
+-->int 8	trace ghost0: 24 11 8 0 0 0 0 0 0
+dec A
+int 7
+-->int 8	trace ghost0: 27 1 8 0 0 0 0 0 0
+mov [3],A
+-->int 8	trace ghost0: 29 1 8 0 0 0 0 0 0
+mov A,[5]
+-->int 8	trace ghost0: 31 11 8 0 0 0 0 0 0
+inc B
+-->int 8	trace ghost0: 33 11 9 0 0 0 0 0 0
+int 7
+-->int 8	trace ghost0: 35 1 9 0 0 0 0 0 0
+mov [2],A
+-->int 8	trace ghost0: 37 1 9 0 0 0 0 0 0
+mov B,[6]
+-->int 8	trace ghost0: 39 1 8 0 0 0 0 0 0
+mov A,[5]
+-->int 8	trace ghost0: 41 11 8 0 0 0 0 0 0
+dec B
+-->int 8	trace ghost0: 43 11 7 0 0 0 0 0 0
+int 7
+-->int 8	trace ghost0: 45 0 7 0 0 0 0 0 0
+mov [0],A  ;Finish Collecting Wall info
+-->int 8	trace ghost0: 47 0 7 0 0 0 0 0 0
+jgt 58,[5],[13]  ;If current x is greater than previous x set left as wall
+int 8
+jlt 62,[5],[13] ;If current x is less than previous x set right as wall
+int 8
+jgt 66,[6],[14]    ;If current y is greater than prevous y set up as wall 
+int 8
+mov [2],0
+int 8
+jeq 68,0,0
+int 8
+mov [3],0  ;f_setleftwall
+-->int 8	trace ghost0: 59 0 7 0 0 0 0 0 0
+jeq 68,0,0
+int 8
+mov [1],0  ;f_setrightwall
+int 8
+jeq 68,0,0
+int 8
+mov [0],0  ;f_setupwall
+int 8
+mov [9],0  ;f_wallset intialize direction weights
+-->int 8	trace ghost0: 69 0 7 0 0 0 0 0 0
+mov [10],0
+-->int 8	trace ghost0: 71 0 7 0 0 0 0 0 0
+mov [11],0
+-->int 8	trace ghost0: 73 0 7 0 0 0 0 0 0
+mov [12],0 ;finished int direction weights
+-->int 8	trace ghost0: 75 0 7 0 0 0 0 0 0
+jgt 84,[5],[7]  ;jump if lm is on left: Determin the weights of which direction to move based on lm locations
+-->int 8	trace ghost0: 77 0 7 0 0 0 0 0 0
+mov [10],[7]
+-->int 8	trace ghost0: 79 0 7 0 0 0 0 0 0
+sub  [10],[5]
+-->int 8	trace ghost0: 81 0 7 0 0 0 0 0 0
+jeq 88,0,0
+int 8
+mov [12],[5]    ;f_lmisleft
+int 8
+sub  [12],[7]
+int 8
+jgt 96,[6],[8]  ;f_islmup :jump if lm is on up 
+int 8
+mov [11],[8]
+int 8
+sub [11],[6]
+int 8
+jeq 107,0,0
+int 8
+mov [9],[6] ;f_lmisup
+-->int 8	trace ghost0: 97 0 7 0 0 0 0 0 0
+sub [9],[8]
+-->int 8	trace ghost0: 99 0 7 0 0 0 0 0 0
+add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
+-->int 8	trace ghost0: 101 0 7 0 0 0 0 0 0
+add [10],[1]
+-->int 8	trace ghost0: 103 0 7 0 0 0 0 0 0
+add [11],[2]
+-->int 8	trace ghost0: 105 0 7 0 0 0 0 0 0
+add [12],[3]
+jgt 119,[9],[12]      ;f_lmweighted :jump if up is better
+int 8
+jgt 129,[10],[12]  ;jump if right is better
+int 8
+jgt 137,[11],[12]  ;jump if down is best
+int 8
+jeq 141,[3],0     ;jump if left is wall
+int 8
+mov A,3                   ;set move direction to left
+int 8
+jeq 143,0,0
+int 8
+jgt 129,[10],[9]   ;f_bigup :jump if right is better
+int 8
+jgt 137,[11],[9]   ;jump if down is best
+int 8
+jeq 141,[0],0     ;jump if left is wall
+int 8
+mov A,0                   ;set move direction to left
+int 8
+jeq 143,0,0
+int 8
+jgt 137,[11],[10]  ;f_bigright :jump if down is best
+-->int 8	trace ghost0: 130 0 7 0 0 0 0 0 0
+jeq 141,[1],0     ;jump if left is wall
+-->int 8	trace ghost0: 132 0 7 0 0 0 0 0 0
+mov A,1                   ;set move direction to left
+-->int 8	trace ghost0: 134 1 7 0 0 0 0 0 0
+jeq 143,0,0
+int 8
+jeq 141,[2],0     ;f_bestdown :jump if down is wall
+int 8
+mov A,2
+int 8
+jeq 143,0,0       ;f_shitawall
+int 8
+int 0               ;f_end make chosen move
+-->int 8	trace ghost0: 144 1 7 0 0 0 0 0 0
+mov [13],[5]        ;Cache current location
+-->int 8	trace ghost0: 146 1 7 0 0 0 0 0 0
+mov [14],[6]	    
+-->int 8	trace ghost0: 148 1 7 0 0 0 0 0 0
+hlt

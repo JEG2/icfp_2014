@@ -1,0 +1,90 @@
+int 3        ;Get ghost's name
+mov [4],A
+int 4        ;Get ghost's position
+mov [5],A
+mov [6],B   ;Finish Storing ghost's position
+int 1     ;Get Lambda Man's position
+mov [7],A
+mov [8],B ;Finish storing Lambda Man's position
+mov A,[5]  ;Collect Wall info
+mov B,[6]
+inc A
+int 7
+mov [1],A
+mov A,[5]
+dec A
+int 7
+mov [3],A
+mov A,[5]
+inc B
+int 7
+mov [2],A
+mov B,[6]
+dec B
+mov [0],A  ;Finish Collecting Wall info
+mov [9],0  ;intialize direction weights
+mov [10],0
+mov [11],0
+mov [12],0 ;finished int direction weights
+jgt 32,[5],[7]  ;jump if lm is on left
+mov [10],[7]
+sub  [10],[5]
+jeq 39,0,0
+mov [10],[5] ;f_35
+sub  [10],[7]
+jgt 44,[6],[8]  ;jump if lm is on up
+mov [11],[8]
+sub  [11],[6]
+jeq 47,0,0
+mov [9],[5]
+sub  [9],[8]
+jgt 55,[9],[11]   ;jump if up is better
+jgt 55,[10],[12]  ;jump if right is better
+jgt 55,[11],[12]  ;jump if down is better
+jeq 55,[3],0      ;jump if left is wall
+mov A,3
+int 0               ;mov left
+hlt
+jgt 62,[9],[11]   ;jump if up is better
+jgt 62,[11],[10]  ;jump if down is better
+jeq 62,[1],0      ;jump if left is wall
+mov A,1
+int 0               ;mov right
+hlt
+jgt 68,[9],[11]   ;jump if up is better
+jeq 68,[2],0      ;jump if down is wall
+mov A,2
+int 0               ;mov down
+hlt
+jeq 74,[0],0      ;jump if down is wall
+mov A,2
+mov A,0
+int 0
+hlt
+jgt 81,[10],[12]  ;jump if right is better
+jgt 81,[11],[12]  ;jump if down is better
+jeq 81,[3],0      ;jump if left is wall
+mov A,3
+int 0               ;mov left
+hlt
+jgt 87,[11],[12]  ;jump if down is better
+jeq 87,[1],0      ;jump if right is wall
+mov A,1
+int 0               ;mov right
+hlt
+jeq 92,[2],0      ;jump if down is wall
+mov A,2
+int 0               ;mov down
+hlt
+jgt 98,[10],[12]  ;jump if right is better
+jeq 98,[3],0      ;jump if left is wall
+mov A,3
+int 0               ;mov left
+hlt
+jeq 103,[1],0      ;jump if right is wall
+mov A,1
+int 0               ;mov right
+hlt
+mov A,1
+int 0               ;mov left
+hlt
