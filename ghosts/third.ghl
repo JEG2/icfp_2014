@@ -38,19 +38,23 @@ mov [9],0  ;f_wallset intialize direction weights
 mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
-jgt f_35,[5],[7]  ;jump if lm is on left Determin the weights of which direction to move based on lm locations
+jgt f_lmisleft,[5],[7]  ;jump if lm is on left: Determin the weights of which direction to move based on lm locations
 mov [10],[7]
 sub  [10],[5]
-jeq f_37,0,0
-mov [12],[5]    ;f_35
+jeq f_islmup,0,0
+mov [12],[5]    ;f_lmisleft
 sub  [12],[7]
-jgt f_41,[6],[8]  ;f_37 jump if lm is on up 
+jgt f_lmisup,[6],[8]  ;f_islmup :jump if lm is on up 
 mov [11],[8]
 sub [11],[6]
-jeq f_43,0,0
-mov [9],[6] ;f_41
-sub  [9],[8]
-jgt f_50,[9],[11]   ;f_43 jump if up is better
+jeq f_lmweighted,0,0
+mov [9],[6] ;f_lmisup
+sub [9],[8]
+add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
+add [10],[1]
+add [11],[2]
+add [12],[3]
+jgt f_50,[9],[11]   ;f_lmweighted jump if up is better
 jgt f_50,[10],[12]  ;jump if right is better
 jgt f_50,[11],[12]  ;jump if down is better
 jeq f_50,[3],0      ;jump if left is wall

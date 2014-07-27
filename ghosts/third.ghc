@@ -24,61 +24,75 @@ mov A,[5]
 dec B
 int 7
 mov [0],A  ;Finish Collecting Wall info
-mov [9],0  ;intialize direction weights
+jgt 31,[5],[13]  ;If current x is greater than previous x set left as wall
+jlt 33,[5],[13] ;If current x is less than previous x set right as wall
+jgt 35,[6],[14]    ;If current y is greater than prevous y set up as wall 
+mov [2],0
+jeq 36,0,0
+mov [3],0  ;f_setleftwall
+jeq 36,0,0
+mov [1],0  ;f_setrightwall
+jeq 36,0,0
+mov [0],0  ;f_setupwall
+mov [9],0  ;f_wallset intialize direction weights
 mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
-jgt 34,[5],[7]  ;jump if lm is on left Determin the weights of which direction to move based on lm locations
+jgt 44,[5],[7]  ;jump if lm is on left: Determin the weights of which direction to move based on lm locations
 mov [10],[7]
 sub  [10],[5]
-jeq 36,0,0
-mov [12],[5]    ;f_35
+jeq 46,0,0
+mov [12],[5]    ;f_lmisleft
 sub  [12],[7]
-jgt 40,[6],[8]  ;f_37 jump if lm is on up 
+jgt 50,[6],[8]  ;f_islmup :jump if lm is on up 
 mov [11],[8]
 sub [11],[6]
-jeq 42,0,0
-mov [9],[6] ;f_41
-sub  [9],[8]
-jgt 48,[9],[11]   ;f_43 jump if up is better
-jgt 48,[10],[12]  ;jump if right is better
-jgt 48,[11],[12]  ;jump if down is better
-jeq 48,[3],0      ;jump if left is wall
+jeq 56,0,0
+mov [9],[6] ;f_lmisup
+sub [9],[8]
+add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
+add [10],[1]
+add [11],[2]
+add [12],[3]
+jgt 62,[9],[11]   ;f_lmweighted jump if up is better
+jgt 62,[10],[12]  ;jump if right is better
+jgt 62,[11],[12]  ;jump if down is better
+jeq 62,[3],0      ;jump if left is wall
 mov A,3             ;set move direction to left
-jeq 81,0,0
-jgt 53,[9],[11]   ;f_50 jump if up is better
-jgt 53,[11],[10]  ;jump if down is better
-jeq 53,[1],0      ;jump if left is wall
+jeq 95,0,0
+jgt 67,[9],[11]   ;f_50 jump if up is better
+jgt 67,[11],[10]  ;jump if down is better
+jeq 67,[1],0      ;jump if left is wall
 mov A,1             ;set move directon to right
-jeq 81,0,0
-jgt 57,[9],[11]   ;f_56 jump if up is better
-jeq 57,[2],0      ;jump if down is wall
+jeq 95,0,0
+jgt 71,[9],[11]   ;f_56 jump if up is better
+jeq 71,[2],0      ;jump if down is wall
 mov A,2             ;set move direction to down
-jeq 81,0,0
-jeq 60,[0],0      ;f_61 jump if up is wall
+jeq 95,0,0
+jeq 74,[0],0      ;f_61 jump if up is wall
 mov A,0             ;set move direction to up
-jeq 81,0,0
-jgt 65,[10],[12]  ;f_65 jump if right is better
-jgt 65,[11],[12]  ;jump if down is better
-jeq 65,[3],0      ;jump if left is wall
-mov A,3             ;set move direction to left
-jeq 81,0,0
-jgt 69,[11],[12]  ;f_71 jump if down is better
-jeq 69,[1],0      ;jump if right is wall
-mov A,1             ;set move direction to right
-jeq 81,0,0
-jeq 72,[2],0      ;f_76 jump if down is wall
-mov A,2             ;set move direction to down
-jeq 81,0,0
-jgt 79,[10],[12]  ;f_80 jump if right is better
+jeq 95,0,0
+jgt 79,[10],[12]  ;f_65 jump if right is better
+jgt 79,[11],[12]  ;jump if down is better
 jeq 79,[3],0      ;jump if left is wall
 mov A,3             ;set move direction to left
-jeq 81,0,0
-jeq 79,[1],0      ;85 jump if right is wall
+jeq 95,0,0
+jgt 83,[11],[12]  ;f_71 jump if down is better
+jeq 83,[1],0      ;jump if right is wall
 mov A,1             ;set move direction to right
-jeq 81,0,0
+jeq 95,0,0
+jeq 86,[2],0      ;f_76 jump if down is wall
+mov A,2             ;set move direction to down
+jeq 95,0,0
+jgt 93,[10],[12]  ;f_80 jump if right is better
+jeq 93,[3],0      ;jump if left is wall
+mov A,3             ;set move direction to left
+jeq 95,0,0
+jeq 93,[1],0      ;85 jump if right is wall
+mov A,1             ;set move direction to right
+jeq 95,0,0
 mov A,3    ;f_85 set move direction to left
-jeq 81,0,0
+jeq 95,0,0
 int 0               ;f_end make chosen move
 mov [13],[5]        ;Cache current location
 mov [14],[6]	    
