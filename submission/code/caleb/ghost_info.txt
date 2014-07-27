@@ -1,5 +1,0 @@
-[ [GHOST_VITALITY[:standard],[8,11],DIRECTIONS[:up]],
-              [GHOST_VITALITY[:standard],[10,12],DIRECTIONS[:up]],
-              [GHOST_VITALITY[:standard],[10,11],DIRECTIONS[:up]],
-              [GHOST_VITALITY[:standard],[10,10],DIRECTIONS[:up]] ]
-

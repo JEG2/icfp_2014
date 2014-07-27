@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby -w
-
-require_relative "../lib/lambda_lang"
-
-unless ARGV.first =~ /\S/
-  abort "USAGE:  #{$PROGRAM_NAME} PATH_TO_CODE"
-end
-
-LambdaLang.compile(ARGF)
