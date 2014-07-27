@@ -231,7 +231,7 @@ module LambdaLang
       case token
       when /\A\d+\z/
         Literal.new(token)
-      when /\A[A-Z]+\z/
+      when /\A[A-Z_]+\z/
         Constant.new(token)
       when "&"
         name = parse_name
