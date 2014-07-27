@@ -24,54 +24,70 @@ mov A,[5]
 dec B
 int 7
 mov [0],A  ;Finish Collecting Wall info
-jgt 31,[5],[13]  ;If current x is greater than previous x set left as wall
-jlt 33,[5],[13] ;If current x is less than previous x set right as wall
-jgt 35,[6],[14]    ;If current y is greater than prevous y set up as wall 
+mov C,[0]
+mov D,[1]
+mov E,[2]
+mov F,[3]
+int 8
+jgt 36,[5],[13]  ;If current x is greater than previous x set left as wall
+jlt 38,[5],[13] ;If current x is less than previous x set right as wall
+jgt 40,[6],[14]    ;If current y is greater than prevous y set up as wall 
 mov [2],0
-jeq 36,0,0
+jeq 41,0,0
 mov [3],0  ;f_setleftwall
-jeq 36,0,0
+jeq 41,0,0
 mov [1],0  ;f_setrightwall
-jeq 36,0,0
+jeq 41,0,0
 mov [0],0  ;f_setupwall
 mov [9],0  ;f_wallset intialize direction weights
+mov C,[0]
+mov D,[1]
+mov E,[2]
+mov F,[3]
+int 8
 mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
-jgt 44,[5],[7]  ;jump if lm is on left: Determin the weights of which direction to move based on lm locations
+jgt 54,[5],[7]  ;jump if lm is on left: Determin the weights of which direction to move based on lm locations
 mov [10],[7]
 sub  [10],[5]
-jeq 46,0,0
+jeq 56,0,0
 mov [12],[5]    ;f_lmisleft
 sub  [12],[7]
-jgt 50,[6],[8]  ;f_islmup :jump if lm is on up 
+jgt 60,[6],[8]  ;f_islmup :jump if lm is on up 
 mov [11],[8]
 sub [11],[6]
-jeq 56,0,0
+jeq 67,0,0
 mov [9],[6] ;f_lmisup
 sub [9],[8]
+mov C,[9]
+mov D,[10]
+mov E,[11]
+mov F,[12]
+int 8
 add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
 add [10],[1]
 add [11],[2]
 add [12],[3]
-jgt 62,[9],[12]      ;f_lmweighted :jump if up is better
-jgt 67,[10],[12]  ;jump if right is better
-jgt 71,[11],[12]  ;jump if down is best
-jeq 73,[3],0     ;jump if left is wall
+mov C,[9]
+mov D,[10]
+mov E,[11]
+mov F,[12]
+int 8
+jgt 81,[9],[12]      ;jump if up is better
+jgt 85,[10],[12]  ;jump if right is better
+jgt 88,[11],[12]  ;jump if down is best
 mov A,3                   ;set move direction to left
-jeq 74,0,0
-jgt 67,[10],[9]   ;f_bigup :jump if right is better
-jgt 71,[11],[9]   ;jump if down is best
-jeq 73,[0],0     ;jump if left is wall
+jeq 90,0,0
+jgt 85,[10],[9]   ;f_bigup :jump if right is better
+jgt 88,[11],[9]   ;jump if down is best
 mov A,0                   ;set move direction to left
-jeq 74,0,0
-jgt 71,[11],[10]  ;f_bigright :jump if down is best
-jeq 73,[1],0     ;jump if left is wall
+jeq 90,0,0
+jgt 88,[11],[10]  ;f_bigright :jump if down is best
 mov A,1                   ;set move direction to left
-jeq 74,0,0
-jeq 73,[2],0     ;f_bestdown :jump if down is wall
-mov A,2
-jeq 74,0,0       ;f_shitawall
+jeq 90,0,0
+mov A,2			  ;f_bestdown
+jeq 90,0,0       
 int 0               ;f_end make chosen move
 mov [13],[5]        ;Cache current location
 mov [14],[6]	    

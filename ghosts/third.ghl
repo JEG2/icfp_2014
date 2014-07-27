@@ -24,6 +24,11 @@ mov A,[5]
 dec B
 int 7
 mov [0],A  ;Finish Collecting Wall info
+mov C,[0]
+mov D,[1]
+mov E,[2]
+mov F,[3]
+int 8
 jgt f_setleftwall,[5],[13]  ;If current x is greater than previous x set left as wall
 jlt f_setrightwall,[5],[13] ;If current x is less than previous x set right as wall
 jgt f_setupwall,[6],[14]    ;If current y is greater than prevous y set up as wall 
@@ -35,6 +40,11 @@ mov [1],0  ;f_setrightwall
 jeq f_wallset,0,0
 mov [0],0  ;f_setupwall
 mov [9],0  ;f_wallset intialize direction weights
+mov C,[0]
+mov D,[1]
+mov E,[2]
+mov F,[3]
+int 8
 mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
@@ -50,28 +60,34 @@ sub [11],[6]
 jeq f_lmweighted,0,0
 mov [9],[6] ;f_lmisup
 sub [9],[8]
+mov C,[9]
+mov D,[10]
+mov E,[11]
+mov F,[12]
+int 8
 add [9],[0] ;f_lmweighted :Add surrounding objects to the weight
 add [10],[1]
 add [11],[2]
 add [12],[3]
-jgt f_bigup,[9],[12]      ;f_lmweighted :jump if up is better
+mov C,[9]
+mov D,[10]
+mov E,[11]
+mov F,[12]
+int 8
+jgt f_bigup,[9],[12]      ;jump if up is better
 jgt f_bigright,[10],[12]  ;jump if right is better
 jgt f_bestdown,[11],[12]  ;jump if down is best
-jeq f_shitawall,[3],0     ;jump if left is wall
 mov A,3                   ;set move direction to left
 jeq f_end,0,0
 jgt f_bigright,[10],[9]   ;f_bigup :jump if right is better
 jgt f_bestdown,[11],[9]   ;jump if down is best
-jeq f_shitawall,[0],0     ;jump if left is wall
 mov A,0                   ;set move direction to left
 jeq f_end,0,0
 jgt f_bestdown,[11],[10]  ;f_bigright :jump if down is best
-jeq f_shitawall,[1],0     ;jump if left is wall
 mov A,1                   ;set move direction to left
 jeq f_end,0,0
-jeq f_shitawall,[2],0     ;f_bestdown :jump if down is wall
-mov A,2
-jeq f_end,0,0       ;f_shitawall
+mov A,2			  ;f_bestdown
+jeq f_end,0,0       
 int 0               ;f_end make chosen move
 mov [13],[5]        ;Cache current location
 mov [14],[6]	    
