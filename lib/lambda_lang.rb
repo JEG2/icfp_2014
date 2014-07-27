@@ -11,5 +11,7 @@ module LambdaLang
     functions = parser.parse
     compiler  = Compiler.new(functions)
     output.puts compiler.compile
+  rescue => error
+    raise "#{error.message} (lexer:  #{lexer.rest[0..20].inspect})"
   end
 end
