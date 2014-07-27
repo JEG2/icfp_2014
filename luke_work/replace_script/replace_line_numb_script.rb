@@ -31,7 +31,4 @@ File.open('third.gcc') do |file|
       logic_file.write(line)
     end
   end
-  
-  puts "#{my_hash}"
-  
 end
