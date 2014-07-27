@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 if ARGV[0]
-  file = ARGV[0]
+  file_name = ARGV[0]
 else
   puts "Enter File Name: "
   file_name = gets.chomp
@@ -15,21 +15,6 @@ File.open(file_name) do |file|
     if line =~ /;(f_\w+)/
       my_hash[$1] = line_index.to_s
     end
-    # if line.include? target
-    #   func_name = line./;f_\w+/
-    #   line.each_char do |char| #, char_index|
-    #     if char == ";"
-    #       char_index = line.index(target)
-    #       puts "Line: #{line}"
-    #       puts "Line Index: #{line_index}"
-    #       puts "Character: #{char}"
-    #       puts "Character Index: #{char_index}"
-    #     end
-    #   end
-    #   line.slice!(0)
-    #   my_hash[line.strip] = line_index.to_s
-    #   # puts "Line: #{index} - #{line}"
-    # end
   end
   
   file.rewind
