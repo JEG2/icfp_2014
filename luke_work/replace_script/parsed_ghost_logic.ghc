@@ -30,7 +30,7 @@ mov [10],0
 mov [11],0
 mov [12],0 ;finished int direction weights
 ;determin the weights of which direction to mov based on lm location
-jgt f_35,[5],[7]  ;jump if lm is on left
+jgt 36,[5],[7]  ;jump if lm is on left
 mov [10],[7]
 sub  [10],[5]
 jeq 39,0,0
