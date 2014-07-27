@@ -1,5 +1,5 @@
-jlt 2,A,4
+jlt f_invoke_move,A,4
 mov A,0
-int 0      ;invoke move
+int 0      ;f_invoke_move
 inc A
 hlt
