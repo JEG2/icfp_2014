@@ -5,9 +5,8 @@ require_relative "lambda_lang/compiler"
 module LambdaLang
   module_function
 
-  def compile(path, output = $stdout)
-    code      = File.read(path)
-    lexer     = Lexer.new(code)
+  def compile(input, output = $stdout)
+    lexer     = Lexer.new(input.read)
     parser    = Parser.new(lexer)
     functions = parser.parse
     compiler  = Compiler.new(functions)

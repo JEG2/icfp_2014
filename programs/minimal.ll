@@ -1,4 +1,4 @@
-func main(initial_world, undocumented) {
+func main(initial_world, ghosts) {
   {0, &step}
 }
 

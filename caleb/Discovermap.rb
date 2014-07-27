@@ -4,14 +4,17 @@ class Discovermap
   @map=[]
   @lambda_man_info
   @ghost_info=[]
-  def initialize(val,val2,val3)
+  @fruit_status=0
+  def initialize(val,val2,val3,val4=0)
     @map=val 
     @lambda_man_info=val2
     @ghost_info=val3
+    @fruit_status=val4
   end
   def hello
     puts "hello"
   end
+  attr_reader :fruit_status
   def get_cell_contents(x,y) 
     return @map[x][y]
   end
@@ -20,10 +23,7 @@ class Discovermap
   end
   def get_ghost_locations
     locations = []
-    puts "ghost count: #{@ghost_info.size}"
-
     @ghost_info.each { |ghost| 
-      puts "ghost"
       locations << ghost[1] 
     }
     return locations
@@ -33,25 +33,21 @@ class Discovermap
     cur_x=x+1
     cur_y=y
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x
     cur_y=y+1
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x-1
     cur_y=y
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-     puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     cur_x=x
     cur_y=y-1
     if (get_cell_contents(cur_x,cur_y) != MAP[:wall]) 
-      puts get_cell_contents(cur_x,cur_y)
       directions << [cur_x,cur_y]
     end
     return directions
