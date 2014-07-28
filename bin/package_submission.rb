@@ -6,11 +6,12 @@ if File.exists?('submission')
   FileUtils.rm_rf 'submission'
 end
 
+FileUtils.cp_r '.', '../submission'
+
 FileUtils.mkdir 'submission'
 
-FileUtils.cp_r './', '../submission'
-
 FileUtils.mv '../submission', './submission/code'
+FileUtils.mv './submission/code/maps', './submission/maps'
 
 FileUtils.mkdir 'submission/solution'
 
