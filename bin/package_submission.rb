@@ -15,6 +15,8 @@ FileUtils.mv './submission/code/maps', './submission/maps'
 
 FileUtils.mkdir 'submission/solution'
 
+FileUtils.rm_rf './submission/code/.git'
+
 ARGV.each do |arg|
   # puts "#{arg}"
   FileUtils.cp "#{arg}", "submission/solution/#{File.basename(arg)}"
