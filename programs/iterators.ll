@@ -5,11 +5,30 @@ func repeat(count, action) {
   }
 }
 
-func reduce_by_count(count, action, initial) {
+func reduce_by_count(count, transformer, initial) {
   if (count > 0) {
-    reduce_by_count(count -1, action, &action(initial))
+    reduce_by_count(count - 1, transformer, &transformer(initial))
   } else {
     initial
+  }
+}
+
+func reduce_with_index(list, transformer, index, initial, args) {
+  if (#list) {
+    initial
+  } else {
+    debug 42
+    debug "list
+    debug index + 1
+    debug initial
+    debug 'list
+    debug index
+    debug args
+    debug 13
+    reduce_with_index("list,
+                      transformer,
+                      index + 1,
+                      &transformer(initial, 'list, index, args))
   }
 }
 
@@ -39,5 +58,14 @@ func map_with_index(list, transformer, index, args) {
   } else {
     {&transformer('list, index, args),
      map_with_index("list, transformer, index + 1, args)}
+  }
+}
+
+func each_with_index(list, action, index, args) {
+  if (#list) {
+
+  } else {
+    &action('list, index, args)
+    each_with_index("list, action, index + 1, args)
   }
 }
