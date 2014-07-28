@@ -3,7 +3,11 @@ mov [4],A
 int 5        ;Get ghost's position
 mov [5],A
 mov [6],B   ;Finish Storing ghost's position
-int 1     ;Get Lambda Man's position
+int 7
+jlt f_gotout,A,5
+mov A,0
+jeq f_end,0,0
+int 1     ;f_gotout :Get Lambda Man's position
 mov [7],A
 mov [8],B ;Finish storing Lambda Man's position
 mov A,[5]  ;Collect Wall info
@@ -50,18 +54,22 @@ sub [11],[6]
 jeq f_lmweighted,0,0
 mov [9],[6] ;f_lmisup
 sub [9],[8]
-jgt f_noupwall,[0],[0]    ;f_lmweighted :Add surrounding objects to the weight
+jgt f_upstart,[0],4       ;f_lmweighted :Add surrounding objects to the weight
+add [9],[0]               
+jgt f_noupwall,[0],[0]    ;f_upstart
 mov [9],0
-add [9],[0]               ;f_noupwall
-jgt f_norightwall,[1],[0]
+jgt f_rightstart,[1],4    ;f_noupwall
+add [10],[1]
+jgt f_norightwall,[1],[0] ;f_rightstart
 mov [10],0
-add [10],[1]              ;f_norightwall
-jgt f_nodownwall,[2],[0]
+jgt f_downstart,[2],4     ;f_norightwall
+add [11],[2]
+jgt f_nodownwall,[2],[0]  ;f_downstart
 mov [11],0
-add [11],[2]              ;f_nodownwall
-jgt f_noleftwall,[3],[0]
+jgt f_rightstart,[3],0	  ;f_nodownwall
+add [12],[3]
+jgt f_path,[0],[0]  ;f_rightstart
 mov [12],0
-add [12],[3]              ;f_noleftwall
 jgt f_bigup,[9],[12]      ;f_path jump if up is better
 jgt f_bigright,[10],[12]  ;jump if right is better
 jgt f_bestdown,[11],[12]  ;jump if down is best

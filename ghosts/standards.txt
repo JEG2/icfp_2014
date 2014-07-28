@@ -7,3 +7,4 @@
 [9] - [12] - Weight of each direction, up, right, down, left
 [13]       - Ghost's previous x coordinate
 [14]       - Ghost's previous y coordinate
+[15]       - Turnish counter
