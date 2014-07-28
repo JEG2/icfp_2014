@@ -1,0 +1,20 @@
+# ICFP 2014
+
+## Team
+
+Luke DeWitt
+James Edward Gray II
+Ed Livengood
+Caleb Nordloh
+
+## Notes
+
+Our big idea was to make a heat map for LambdaMan to follow around the board,
+but we didn't have time to finish porting our prototypes into the Lambda syntax.
+Lambda man tries to follow runs of pills, then wander to next batches of pills.
+Our Lambda Man language has a lot of features, probably a few too many.
+
+Our ghosts focus on the case by measuring distance to Lambda and prioriting the
+longest distance.  We were working on a memory of past moves for the ghosts to
+keep them from gettin stuck into making the same moves.  The ghost language is a
+simple pre-parser.
