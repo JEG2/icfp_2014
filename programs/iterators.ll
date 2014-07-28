@@ -13,6 +13,17 @@ func reduce_by_count(count, transformer, initial) {
   }
 }
 
+func reduce(list, transformer, initial, args) {
+  if (#list) {
+    initial
+  } else {
+    reduce("list,
+           transformer,
+           &transformer(initial, 'list, args),
+           args)
+  }
+}
+
 func reduce_with_index(list, transformer, index, initial, args) {
   if (#list) {
     initial

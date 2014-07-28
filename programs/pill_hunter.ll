@@ -19,7 +19,12 @@ func build_wandering_cell(cell, x, y_and_map) {
 }
 
 func step(ai_state, current_world) {
-  eat_pill_or_wander(ai_state, current_world, find_pill(current_world))
+  if (in_danger(current_world)) {
+    debug 13
+    eat_pill_or_wander(ai_state, current_world, find_pill(current_world))
+  } else {
+    eat_pill_or_wander(ai_state, current_world, find_pill(current_world))
+  }
 }
 
 func eat_pill_or_wander(ai_state, current_world, pill_direction) {
